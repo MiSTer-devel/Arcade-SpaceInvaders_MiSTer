@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Indian Battle</name>
+	<mameversion>0226</mameversion>
+	<setname>indianbt</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Adventure / Western</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="indianbt"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00">
+		<dip bits="16,17"   name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"      name="Tilt" ids="Off,On"/>
+		<dip bits="19"      name="Num Catch Animals" ids="6,3"/>
+		<dip bits="23"   name="Invulner (cheat)" ids="Off,On"/>
+	</switches>
+	<rom index="0" zip="indianbt.zip" md5="none">
+		<part crc="ddc2b25d" name="1.36"/>
+		<patch offset="0x0003">C32B05</patch>
+		<part crc="6499b062" name="2.35"/>
+		<part crc="5c51675d" name="3.34"/>
+		<part crc="70ebec95" name="4.33"/>
+		<part crc="7b4022f4" name="5.32"/>
+		<part crc="89bd6f73" name="6.31"/>
+		<part crc="7060ba0b" name="7.42"/>
+		<part crc="eaccfc0a" name="8.41"/>
+		<part crc="4acf4db3" name="mb7054.1"/>
+		<part crc="62cb3419" name="mb7054.2"/>
+	</rom>
+	<rom index="1">
+		<part>1A</part>
+	</rom>
+</misterromdescription>

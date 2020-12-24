@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Super Invaders (bootleg set 2)</name>
+	<mameversion>0226</mameversion>
+	<setname>sinvemag</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1978</year>
+	<manufacturer>bootleg (Emag)</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sinvemag"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="invaders.zip|sinvemag.zip" md5="none">
+		<part crc="86bb8cb6" name="sv01.36"/>
+		<part crc="febe6d1a" name="emag_si.b"/>
+		<part crc="aafb24f7" name="emag_si.c"/>
+		<part repeat="2048">00</part>
+		<part crc="68c4b9da" name="emag_si.d"/>
+		<part crc="c4e80586" name="emag_si.e"/>
+		<part crc="077f5ef2" name="emag_si.f"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

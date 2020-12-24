@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Space Invaders (Model Racing)</name>
+	<mameversion>0226</mameversion>
+	<setname>invadrmr</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1978</year>
+	<manufacturer>Taito / Model Racing</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="invadrmr"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="invaders.zip|invadrmr.zip" md5="none">
+		<part crc="389d44b6" name="11.1t"/>
+		<part crc="0e159534" name="sv02.1p"/>
+		<part crc="805b04f0" name="20.1n"/>
+		<part repeat="2048">00</part>
+		<part crc="1293b826" name="sv04.1j"/>
+		<part crc="76b4a6ea" name="13.1h"/>
+		<part crc="2c68e0b4" name="sv06.1g"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

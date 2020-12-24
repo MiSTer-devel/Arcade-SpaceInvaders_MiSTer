@@ -1,0 +1,29 @@
+<misterromdescription>
+	<name>Shuttle Invader</name>
+	<mameversion>0226</mameversion>
+	<setname>shuttlei</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Omori Electric Co., Ltd.</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="shuttlei"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="shuttlei.zip" md5="none">
+		<part crc="b6d4f0cd" name="1.13c"/>
+		<part crc="168d6138" name="2.11c"/>
+		<part crc="804bd7fb" name="3.13d"/>
+		<part crc="8205b369" name="4.11d"/>
+		<part crc="b50df820" name="5.13e"/>
+		<part crc="4978552b" name="8.11f"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="f108d00d" name="82s129.2b"/>
+		<part crc="f108d00d" name="82s129.2b"/>
+	</rom>
+	<rom index="1">
+		<part>01</part>
+	</rom>
+</misterromdescription>

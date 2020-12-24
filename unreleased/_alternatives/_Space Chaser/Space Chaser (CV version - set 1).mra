@@ -1,0 +1,32 @@
+<misterromdescription>
+	<name>Space Chaser (CV version - set 1)</name>
+	<mameversion>0226</mameversion>
+	<setname>schasercv</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Maze</category>
+	<category>Racing</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="schaser" cpp="8080bw" input="schasercv"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="schaser.zip|schasercv.zip" md5="none">
+		<part crc="bec2b16b" name="1"/>
+		<part crc="9d25e608" name="2"/>
+		<part crc="113d0635" name="3"/>
+		<part crc="f3a43c8d" name="4"/>
+		<part crc="47c84f23" name="5"/>
+		<part crc="02ff2199" name="6"/>
+		<part crc="87d06b88" name="7"/>
+		<part crc="6dfaad08" name="8"/>
+		<part crc="3d1a2ae3" name="9"/>
+		<part crc="037edb99" name="10"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="037e16ac" name="cv01"/>
+		<part crc="037e16ac" name="cv01"/>
+	</rom>
+	<rom index="1">
+		<part>23</part>
+	</rom>
+</misterromdescription>

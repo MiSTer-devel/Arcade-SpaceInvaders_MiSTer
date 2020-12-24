@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Invader's Revenge (set 1)</name>
+	<mameversion>0226</mameversion>
+	<setname>invrvnge</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980?</year>
+	<manufacturer>Zenitone-Microsec Ltd.</manufacturer>
+	<category>Space / Invaders</category>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="invrvnge"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="invrvnge.zip" md5="none">
+		<part crc="0e229b9f" name="h.ic36"/>
+		<part crc="26b38aa4" name="g.ic35"/>
+		<part crc="b3b2749e" name="f.ic34"/>
+		<part crc="d8e75102" name="e.ic33"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="7de74988" name="colour.bin"/>
+		<part crc="7de74988" name="colour.bin"/>
+	</rom>
+	<rom index="1">
+		<part>0A</part>
+	</rom>
+</misterromdescription>

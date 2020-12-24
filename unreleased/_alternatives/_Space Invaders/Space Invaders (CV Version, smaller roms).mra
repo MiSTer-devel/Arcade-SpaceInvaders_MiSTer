@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Space Invaders (CV Version, smaller roms)</name>
+	<mameversion>0226</mameversion>
+	<setname>sicv1</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sicv"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00">
+		<dip bits="16,17" name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"    name="Tilt" ids="Off,On"/>
+		<dip bits="19"    name="Bonus Life" ids="1500,1000"/>
+		<dip bits="23"    name="Coin Info" ids="Off,On"/>
+	</switches>
+	<rom index="0" zip="invaders.zip|sicv1.zip" md5="none">
+		<part crc="309d4582" name="cv11.s1"/>
+		<part crc="70153e09" name="cv12.r1"/>
+		<part crc="2ca24fee" name="cv13.np1"/>
+		<part repeat="2048">FF</part>
+		<part crc="556d9a97" name="cv14.jk1"/>
+		<part crc="ac520cf5" name="cv15.i1"/>
+		<part crc="285cfb59" name="cv16.g1"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="037e16ac" name="cv01.1"/>
+		<part crc="8263da38" name="cv02.2"/>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

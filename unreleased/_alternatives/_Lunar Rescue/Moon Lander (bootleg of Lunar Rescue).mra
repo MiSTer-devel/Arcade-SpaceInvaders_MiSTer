@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Moon Lander (bootleg of Lunar Rescue)</name>
+	<mameversion>0226</mameversion>
+	<setname>mlander</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>bootleg (Leisure Time Electronics)</manufacturer>
+	<category>Space / Moon</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="lrescue" cpp="8080bw" input="lrescue"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="lrescue.zip|mlander.zip" md5="none">
+		<part crc="69df529a" name="ml1.u36"/>
+		<part crc="3b503337" name="ml2.u35"/>
+		<part crc="64e53458" name="ml3.u34"/>
+		<part crc="c9a74571" name="ml4.u33"/>
+		<part crc="88291fa2" name="ml5.u32"/>
+		<part crc="bfb0f65d" name="ml6.u31"/>
+		<part repeat="4096">00</part>
+		<part crc="aac24f34" name="01.bin"/>
+		<part crc="2bdf83a0" name="02.bin"/>
+	</rom>
+	<rom index="1">
+		<part>06</part>
+	</rom>
+</misterromdescription>

@@ -1,0 +1,33 @@
+<misterromdescription>
+	<name>Ultra Invaders</name>
+	<mameversion>0226</mameversion>
+	<setname>ultrainv</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Taito / Konami</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sicv"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00">
+		<dip bits="16,17" name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"    name="Tilt" ids="Off,On"/>
+		<dip bits="19"    name="Bonus Life" ids="1500,1000"/>
+		<dip bits="23"    name="Coin Info" ids="Off,On"/>
+	</switches>
+	<rom index="0" zip="invaders.zip|ultrainv.zip" md5="none">
+		<part crc="db9de599" name="in-01.bin"/>
+		<part crc="febe6d1a" name="in-02.bin"/>
+		<part crc="3d5c9820" name="in-03.bin"/>
+		<part repeat="2048">00</part>
+		<part crc="1293b826" name="in-04.bin"/>
+		<part crc="e315a8c4" name="in-05.bin"/>
+		<part crc="d958478c" name="in-06.bin"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

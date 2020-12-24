@@ -1,0 +1,24 @@
+<misterromdescription>
+	<name>Jatre Specter (set 2)</name>
+	<mameversion>0226</mameversion>
+	<setname>jspecter2</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>bootleg (Jatre)</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="jspecter"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="invaders.zip|jspecter2.zip" md5="none">
+		<part crc="0584b6c4" name="unksi.b2"/>
+		<part repeat="1024">00</part>
+		<part crc="58095955" name="unksi.a2"/>
+		<part repeat="4096">00</part>
+		<part repeat="2048">00</part>
+		<part repeat="1024">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

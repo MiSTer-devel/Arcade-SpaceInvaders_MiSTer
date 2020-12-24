@@ -1,0 +1,28 @@
+<misterromdescription>
+	<name>Destination Earth (bootleg of Lunar Rescue)</name>
+	<mameversion>0226</mameversion>
+	<setname>desterth</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>bootleg</manufacturer>
+	<category>Space / Moon</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="lrescue" cpp="8080bw" input="lrescue"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="lrescue.zip|desterth.zip" md5="none">
+		<part crc="f86923e5" name="36_h.bin"/>
+		<part crc="797f440d" name="35_g.bin"/>
+		<part crc="993d0846" name="34_f.bin"/>
+		<part crc="8d155fc5" name="33_e.bin"/>
+		<part crc="3f531b6f" name="32_d.bin"/>
+		<part crc="ab019c30" name="31_c.bin"/>
+		<part crc="ed9dbac6" name="42_b.bin"/>
+		<part repeat="2048">00</part>
+		<part crc="8b2e38de" name="7643-1.cpu"/>
+		<part crc="8b2e38de" name="7643-1.cpu"/>
+	</rom>
+	<rom index="1">
+		<part>06</part>
+	</rom>
+</misterromdescription>

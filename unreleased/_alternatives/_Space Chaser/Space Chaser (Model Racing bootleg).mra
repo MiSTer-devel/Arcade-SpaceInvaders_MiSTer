@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Space Chaser (Model Racing bootleg)</name>
+	<mameversion>0226</mameversion>
+	<setname>schaserm</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>bootleg (Model Racing)</manufacturer>
+	<category>Maze</category>
+	<category>Racing</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="schaser" cpp="8080bw" input="schaserm"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="schaser.zip|schaserm.zip" md5="none">
+		<part crc="4e547879" name="mr26.71"/>
+		<part crc="825fc8ac" name="rt08.70"/>
+		<part crc="de9d3f85" name="rt09.69"/>
+		<part crc="069ec108" name="mr27.62"/>
+		<part crc="17a7ef7a" name="rt11.61"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="950cf973" name="rt06.ic2"/>
+		<part crc="950cf973" name="rt06.ic2"/>
+	</rom>
+	<rom index="1">
+		<part>23</part>
+	</rom>
+</misterromdescription>

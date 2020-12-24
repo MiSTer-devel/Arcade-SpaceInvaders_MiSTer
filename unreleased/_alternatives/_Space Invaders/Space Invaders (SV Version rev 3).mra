@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Space Invaders (SV Version rev 3)</name>
+	<mameversion>0226</mameversion>
+	<setname>sisv3</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1978</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sitv"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="invaders.zip|sisv3.zip" md5="none">
+		<part crc="86bb8cb6" name="sv0h.36"/>
+		<part crc="0e159534" name="sv02.35"/>
+		<part crc="483e651e" name="sv10.34"/>
+		<part repeat="2048">00</part>
+		<part crc="1293b826" name="sv04.31"/>
+		<part crc="cd80b13f" name="sv09.42"/>
+		<part crc="2c68e0b4" name="sv06.41"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

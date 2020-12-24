@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Invader's Revenge (Game World, single PCB)</name>
+	<mameversion>0226</mameversion>
+	<setname>invrvngegw</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980?</year>
+	<manufacturer>Zenitone-Microsec Ltd. (Game World license)</manufacturer>
+	<category>Space / Invaders</category>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invrvnge" cpp="8080bw" input="invrvnge"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="invrvnge.zip|invrvngegw.zip" md5="none">
+		<part crc="4fe35d1f" name="ir.5m"/>
+		<part crc="92d0442c" name="ir.5n"/>
+		<part crc="18d2372d" name="ir.5p"/>
+		<part crc="657ddf27" name="ir.5r"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="6ce639bf" name="ir.3r"/>
+		<part crc="6ce639bf" name="ir.3r"/>
+	</rom>
+	<rom index="1">
+		<part>0A</part>
+	</rom>
+</misterromdescription>

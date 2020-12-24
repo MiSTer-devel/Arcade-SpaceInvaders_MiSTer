@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Crash Road (bootleg of Space Chaser)</name>
+	<mameversion>0226</mameversion>
+	<setname>crashrd</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>bootleg (Centromatic)</manufacturer>
+	<category>Maze</category>
+	<category>Racing</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="schaser" cpp="8080bw" input="schaserm"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="schaser.zip|crashrd.zip" md5="none">
+		<part crc="53749427" name="2716-5m.bin"/>
+		<part crc="e391d768" name="2716-5n.bin"/>
+		<part crc="fededc5d" name="2716-5p.bin"/>
+		<part crc="30830779" name="2716-5r.bin"/>
+		<part crc="6a974917" name="2716-5s.bin"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="950cf973" name="rt06.ic2"/>
+		<part crc="950cf973" name="rt06.ic2"/>
+	</rom>
+	<rom index="1">
+		<part>0A</part>
+	</rom>
+</misterromdescription>

@@ -1,0 +1,33 @@
+<misterromdescription>
+	<name>Rolling Crash - Moon Base</name>
+	<mameversion>0226</mameversion>
+	<setname>rollingc</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Nichibutsu</manufacturer>
+	<category>Games / Multiplay</category>
+	<category>Racing</category>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="rollingc"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="rollingc.zip" md5="none">
+		<part crc="66fa50bf" name="rc01.bin"/>
+		<part crc="61c06ae4" name="rc02.bin"/>
+		<part crc="77e39fa0" name="rc03.bin"/>
+		<part crc="3fdfd0f3" name="rc04.bin"/>
+		<part crc="c26a8f5b" name="rc05.bin"/>
+		<part crc="0b98dbe5" name="rc06.bin"/>
+		<part crc="6242145c" name="rc07.bin"/>
+		<part crc="d23c2ef1" name="rc08.bin"/>
+		<part crc="2e2c5b95" name="rc09.bin"/>
+		<part crc="ef94c502" name="rc10.bin"/>
+		<part crc="a3164b18" name="rc11.bin"/>
+		<part crc="2052f6d9" name="rc12.bin"/>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>25</part>
+	</rom>
+</misterromdescription>

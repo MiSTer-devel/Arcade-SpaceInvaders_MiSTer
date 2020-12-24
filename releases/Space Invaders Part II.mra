@@ -1,0 +1,35 @@
+<misterromdescription>
+	<name>Space Invaders Part II (Taito, bigger ROMs)</name>
+	<mameversion>0226</mameversion>
+	<setname>invadpt2</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="invadpt2"/>
+	<display type="raster" rotate="270"/>
+	<switches default="40,80,00">
+		<dip bits="16"   name="Lives" ids="3,4"/>
+		<dip bits="17"   name="Rotate Images" ids="On,Off"/>
+		<dip bits="18"      name="Tilt" ids="Off,On"/>
+		<dip bits="19"      name="Preset Mode" ids="Off,On"/>
+		<dip bits="23"   name="Coin Info" ids="Off,On"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="invadpt2.zip" md5="none">
+		<part crc="7288a511" name="pv01"/>
+		<part crc="097dd8d5" name="pv02"/>
+		<part crc="1766337e" name="pv03"/>
+		<part crc="8f0e62e0" name="pv04"/>
+		<part crc="19b505e9" name="pv05"/>
+		<part repeat="2048">00</part>
+		<part repeat="2048">00</part>
+		<part repeat="2048">00</part>
+		<part crc="a732810b" name="pv06.1"/>
+		<part crc="2c5b91cb" name="pv07.2"/>
+	</rom>
+	<rom index="1">
+		<part>0D</part>
+	</rom>
+</misterromdescription>

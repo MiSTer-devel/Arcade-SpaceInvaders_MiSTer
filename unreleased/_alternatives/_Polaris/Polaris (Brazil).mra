@@ -1,0 +1,35 @@
+<misterromdescription>
+	<name>Polaris (Brazil)</name>
+	<mameversion>0226</mameversion>
+	<setname>polarisbr</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1981</year>
+	<manufacturer>Taito do Brasil</manufacturer>
+	<category>Army / Submarine</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="polaris" cpp="8080bw" input="polaris"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,20">
+		<dip bits="16,17" name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"    name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="19"    name="Invincible Test" ids="Off,On"/>
+		<dip bits="20"    name="Demo Sounds" ids="Off,On"/>
+		<dip bits="23"    name="High Score Preset Mode" ids="Off,On"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="polaris.zip|polarisbr.zip" md5="none">
+		<part crc="17015f52" name="1"/>
+		<part crc="9a5c8cb2" name="2"/>
+		<part crc="60118368" name="3"/>
+		<part crc="65694948" name="4"/>
+		<part crc="6cb21b31" name="5"/>
+		<part crc="3df77bac" name="6"/>
+		<part crc="0d811b92" name="7"/>
+		<part repeat="2048">00</part>
+		<part crc="164aa05d" name="ps08.1b"/>
+		<part crc="164aa05d" name="ps08.1b"/>
+	</rom>
+	<rom index="1">
+		<part>1E</part>
+	</rom>
+</misterromdescription>

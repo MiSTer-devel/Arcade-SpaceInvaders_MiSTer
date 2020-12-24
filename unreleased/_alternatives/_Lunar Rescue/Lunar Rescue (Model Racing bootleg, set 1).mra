@@ -1,0 +1,33 @@
+<misterromdescription>
+	<name>Lunar Rescue (Model Racing bootleg, set 1)</name>
+	<mameversion>0226</mameversion>
+	<setname>lrescuem</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>bootleg (Model Racing)</manufacturer>
+	<category>Space / Moon</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="lrescue" cpp="8080bw" input="lrescue"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="lrescue.zip|lrescuem.zip" md5="none">
+		<part crc="bad5ba48" name="48.ic36"/>
+		<part crc="a6dc23d6" name="49.ic35"/>
+		<part crc="90179fee" name="50.ic34"/>
+		<part crc="1d197d87" name="51.ic33"/>
+		<part crc="4326d338" name="52.ic32"/>
+		<part crc="3b272372" name="53.ic31"/>
+		<part crc="a877c5b6" name="54.ic42"/>
+		<part crc="c9a93407" name="55.ic41"/>
+		<part crc="3398798f" name="56.ic40"/>
+		<part crc="37c5bfc6" name="57.ic39"/>
+		<part crc="1b7a5644" name="58.ic38"/>
+		<part crc="c342b907" name="59.ic37"/>
+		<part repeat="4096">00</part>
+		<part crc="aac24f34" name="cv01-7643.2c"/>
+		<part crc="2bdf83a0" name="cv02-7643.1c"/>
+	</rom>
+	<rom index="1">
+		<part>06</part>
+	</rom>
+</misterromdescription>

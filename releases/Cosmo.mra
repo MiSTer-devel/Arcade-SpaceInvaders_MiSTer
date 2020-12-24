@@ -1,0 +1,31 @@
+<misterromdescription>
+	<name>Cosmo</name>
+	<mameversion>0226</mameversion>
+	<setname>cosmo</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>TDS and MINTS</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="cosmo"/>
+	<display type="raster" rotate="90"/>
+	<switches default="00,00,00">
+		<dip bits="16"   name="Lives" ids="3,5"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="cosmo.zip" md5="none">
+		<part crc="445c9a98" name="1.36"/>
+		<part crc="df3eb731" name="2.35"/>
+		<part crc="772c813f" name="3.34"/>
+		<part crc="279f66e6" name="4.33"/>
+		<part crc="cefb18df" name="5.32"/>
+		<part crc="b037f6c4" name="6.31"/>
+		<part crc="c3831ea2" name="7.42"/>
+		<part repeat="2048">00</part>
+		<part crc="bd8576f1" name="n-1.7d"/>
+		<part crc="48f1ade5" name="n-2.6e"/>
+	</rom>
+	<rom index="1">
+		<part>14</part>
+	</rom>
+</misterromdescription>

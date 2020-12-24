@@ -1,0 +1,31 @@
+<misterromdescription>
+	<name>Vortex</name>
+	<mameversion>0226</mameversion>
+	<setname>vortex</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Zilec Electronics</manufacturer>
+	<category>Space / Asteroids</category>
+	<category>Space / Fighter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="vortex"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,80">
+		<dip bits="0,1"   name="Ships" ids="2,3,4,5"/>
+		<dip bits="23"   name="Coinage" ids="2C_1C,1C_1C"/>
+	</switches>
+	<buttons names="Fire - Hold Thurst,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="vortex.zip" md5="none">
+		<part crc="577417a6" name="1.t36"/>
+		<part crc="126d0049" name="2.t35"/>
+		<part crc="4a2510b3" name="3.t34"/>
+		<part crc="da0274fe" name="4.t33"/>
+		<part crc="a3de49d6" name="5.t32"/>
+		<part crc="271085d0" name="6.t31"/>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>02</part>
+	</rom>
+</misterromdescription>

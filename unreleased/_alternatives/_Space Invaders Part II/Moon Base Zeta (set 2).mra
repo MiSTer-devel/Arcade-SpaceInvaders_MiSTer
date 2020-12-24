@@ -1,0 +1,40 @@
+<misterromdescription>
+	<name>Moon Base Zeta (set 2)</name>
+	<mameversion>0226</mameversion>
+	<setname>moonbasea</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito / Nichibutsu</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invadpt2" cpp="8080bw" input="invadpt2"/>
+	<display type="raster" rotate="270"/>
+	<switches default="40,80,00">
+		<dip bits="16"   name="Lives" ids="3,4"/>
+		<dip bits="17"   name="Rotate Images" ids="On,Off"/>
+		<dip bits="18"      name="Tilt" ids="Off,On"/>
+		<dip bits="19"      name="Preset Mode" ids="Off,On"/>
+		<dip bits="23"   name="Coin Info" ids="Off,On"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="invadpt2.zip|moonbasea.zip" md5="none">
+		<part crc="82dbf2c7" name="ze3-1.a4"/>
+		<part crc="c867f5b4" name="ze3-2.c4"/>
+		<part crc="cb23ccc1" name="ze3-3.e4"/>
+		<part crc="86a00411" name="ze3-4_alt.f4"/>
+		<part crc="2b105ed3" name="ze3-5.h4"/>
+		<part crc="cb3d6dcb" name="ze3-6.l4"/>
+		<part crc="774b52c9" name="ze3-7.a5"/>
+		<part crc="e88ea83b" name="ze3-8.c5"/>
+		<part crc="2dd5adfa" name="ze3-9.e5"/>
+		<part crc="1e7c22a4" name="ze3-10.f5"/>
+		<part repeat="2048">00</part>
+		<part repeat="2048">00</part>
+		<part repeat="2048">00</part>
+		<part crc="2bdf83a0" name="cv02.h7"/>
+		<part crc="aac24f34" name="cv01.g7"/>
+	</rom>
+	<rom index="1">
+		<part>0D</part>
+	</rom>
+</misterromdescription>

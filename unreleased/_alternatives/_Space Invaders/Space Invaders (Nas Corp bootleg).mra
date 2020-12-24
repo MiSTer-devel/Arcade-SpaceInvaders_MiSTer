@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Space Invaders (Nas Corp bootleg)</name>
+	<mameversion>0226</mameversion>
+	<setname>invadernc</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1978</year>
+	<manufacturer>bootleg (Nas Corp)</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sicv"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00">
+		<dip bits="16,17" name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"    name="Tilt" ids="Off,On"/>
+		<dip bits="19"    name="Bonus Life" ids="1500,1000"/>
+		<dip bits="23"    name="Coin Info" ids="Off,On"/>
+	</switches>
+	<rom index="0" zip="invaders.zip|invadernc.zip" md5="none">
+		<part crc="499f253a" name="1.ic65"/>
+		<part crc="4b7f232e" name="2.ic66"/>
+		<part crc="5c6bdd47" name="3.ic67"/>
+		<part repeat="1024">00</part>
+		<part crc="5a7bbf1f" name="7.ic57"/>
+		<part crc="455b1fa7" name="4.ic70"/>
+		<part crc="b9ea71a0" name="5.ic71"/>
+		<part crc="2c68e0b4" name="6.ic72"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

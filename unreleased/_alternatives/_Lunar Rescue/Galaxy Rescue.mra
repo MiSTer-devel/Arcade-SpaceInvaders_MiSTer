@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Galaxy Rescue</name>
+	<mameversion>0226</mameversion>
+	<setname>grescue</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito (Universal license?)</manufacturer>
+	<category>Space / Moon</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="lrescue" cpp="8080bw" input="lrescue"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="lrescue.zip|grescue.zip" md5="none">
+		<part crc="2bbc4778" name="lrescue.1"/>
+		<part crc="49e79706" name="lrescue.2"/>
+		<part crc="1ac969be" name="lrescue.3"/>
+		<part crc="ca412991" name="grescue.4"/>
+		<part crc="a419a4d6" name="grescue.5"/>
+		<part crc="bfb0f65d" name="lrescue.6"/>
+		<part repeat="4096">00</part>
+		<part crc="8b2e38de" name="7643-1.cpu"/>
+		<part crc="8b2e38de" name="7643-1.cpu"/>
+	</rom>
+	<rom index="1">
+		<part>06</part>
+	</rom>
+</misterromdescription>

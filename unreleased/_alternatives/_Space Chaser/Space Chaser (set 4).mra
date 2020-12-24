@@ -1,0 +1,33 @@
+<misterromdescription>
+	<name>Space Chaser (set 4)</name>
+	<mameversion>0226</mameversion>
+	<setname>schaserc</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Maze</category>
+	<category>Racing</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="schaser" cpp="8080bw" input="schaser"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="schaser.zip|schaserc.zip" md5="none">
+		<part crc="ca90619c" name="45.ic30"/>
+		<part crc="6a016895" name="46.ic36"/>
+		<part crc="2ac43a93" name="rt15.bin"/>
+		<part crc="f5583afc" name="rt16.bin"/>
+		<part crc="51cf1155" name="rt17.bin"/>
+		<part crc="3f0fc73a" name="rt18.bin"/>
+		<part crc="b66ea369" name="rt19.bin"/>
+		<part crc="d476e182" name="47.ic39"/>
+		<part crc="b368ac98" name="rt21.bin"/>
+		<part crc="6e060dfb" name="rt22.bin"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="950cf973" name="rt06.ic2"/>
+		<part crc="950cf973" name="rt06.ic2"/>
+	</rom>
+	<rom index="1">
+		<part>23</part>
+	</rom>
+</misterromdescription>

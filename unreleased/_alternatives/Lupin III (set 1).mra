@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Lupin III (set 1)</name>
+	<mameversion>0226</mameversion>
+	<setname>lupin3</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Adventure / Cops</category>
+	<category>Maze</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="lupin3"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00">
+		<dip bits="16,17"   name="Lives" ids="3,4,5,6"/>
+		<dip bits="18"   name="Cabinet" ids="Upright,Cocktail"/>
+		<dip bits="19"   name="Bags to Collect" ids="8,2" />
+		<dip bits="23"   name="Invuln  (cheat)" ids="Off,On" />
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="lupin3.zip" md5="none">
+		<part crc="fd506ee8" name="lp01.36"/>
+		<part crc="ec4225f8" name="lp02.35"/>
+		<part crc="9307d377" name="lp03.34"/>
+		<part crc="e41e8b2b" name="lp04.33"/>
+		<part crc="f5c2faf4" name="lp05.32"/>
+		<part crc="66289ab2" name="lp06.31"/>
+		<part repeat="4096">00</part>
+		<part crc="33dbd03a" name="lp08.1"/>
+		<part crc="9eaee652" name="lp09.2"/>
+	</rom>
+	<rom index="1">
+		<part>26</part>
+	</rom>
+</misterromdescription>

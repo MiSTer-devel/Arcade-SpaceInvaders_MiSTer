@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Steel Worker</name>
+	<mameversion>0226</mameversion>
+	<setname>steelwkr</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Platform</category>
+	<category>Platform / Men at Work</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="steelwkr"/>
+	<display type="raster" rotate="0"/>
+	<switches default="00,00,00">
+		<dip bits="16,17"   name="Lives" ids="1,2,3,4"/>
+	</switches>
+	<buttons names="Confirm,Reverse,-,-,Start 1P,Start 2P,Coin" default="A,B,Start,Select,R"/>
+	<rom index="0" zip="steelwkr.zip" md5="none">
+		<part crc="5d78873a" name="1.36"/>
+		<part crc="99cd70c6" name="2.35"/>
+		<part crc="18103b67" name="3.34"/>
+		<part crc="c413ae82" name="4.33"/>
+		<part crc="ca7b07b5" name="5.32"/>
+		<part crc="f8181fa0" name="6.31"/>
+		<part crc="a35f113e" name="7.42"/>
+		<part crc="af208370" name="8.41"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="98f31392" name="la05.1"/>
+		<part crc="98f31392" name="la06.2"/>
+	</rom>
+	<rom index="1">
+		<part>24</part>
+	</rom>
+</misterromdescription>

@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Space Invaders (Electromar, Spanish)</name>
+	<mameversion>0226</mameversion>
+	<setname>invadersem</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>19??</year>
+	<manufacturer>Electromar</manufacturer>
+	<category>Space / Invaders</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invaders" cpp="8080bw" input="sitv"/>
+	<display type="raster" rotate="270"/>
+	<rom index="0" zip="invaders.zip|invadersem.zip" md5="none">
+		<part crc="7fc672a5" name="h.bin"/>
+		<part crc="ad518883" name="g.bin"/>
+		<part crc="f4a6c480" name="f.bin"/>
+		<part repeat="2048">00</part>
+		<part crc="8f62c513" name="c.bin"/>
+		<part crc="2808e5c0" name="b.bin"/>
+		<part crc="04c9b084" name="a.bin"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>00</part>
+	</rom>
+</misterromdescription>

@@ -1,0 +1,35 @@
+<misterromdescription>
+	<name>Galaxy Wars (Taito )</name>
+	<mameversion>0226</mameversion>
+	<setname>galxwarst</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Universal (Taito license?)</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="galxwars" cpp="8080bw" input="galxwars"/>
+	<display type="raster" rotate="270"/>
+	<switches default="40,80,00">
+		<dip bits="16,17"   name="Lives" ids="2,3,4,5"/>
+		<dip bits="18"      name="Unknown" ids="Off,On"/>
+		<dip bits="19"      name="Bonus Life" ids="3k,5k"/>
+		<dip bits="23"   name="Coinage" ids="1C_1C,2C_1C"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="galxwars.zip|galxwarst.zip" md5="none">
+		<part crc="608bfe7f" name="galxwars.0"/>
+		<part crc="a810b258" name="galxwars.1"/>
+		<part crc="74f31781" name="galxwars.2"/>
+		<part crc="c88f886c" name="galxwars.3"/>
+		<part repeat="4096">00</part>
+		<part crc="ae4fe8fb" name="galxwars.4"/>
+		<part crc="37708a35" name="galxwars.5"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="aac24f34" name="01.1"/>
+		<part crc="2bdf83a0" name="02.2"/>
+	</rom>
+	<rom index="1">
+		<part>0A</part>
+	</rom>
+</misterromdescription>

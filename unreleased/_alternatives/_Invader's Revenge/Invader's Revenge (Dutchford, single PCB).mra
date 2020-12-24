@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Invader's Revenge (Dutchford, single PCB)</name>
+	<mameversion>0226</mameversion>
+	<setname>invrvngedu</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980?</year>
+	<manufacturer>Zenitone-Microsec Ltd. (Dutchford license)</manufacturer>
+	<category>Space / Invaders</category>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="invrvnge" cpp="8080bw" input="invrvnge"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="invrvnge.zip|invrvngedu.zip" md5="none">
+		<part crc="b145cb71" name="ir.5m"/>
+		<part crc="660e8af3" name="ir.5n"/>
+		<part crc="6ec5a9ad" name="ir.5p"/>
+		<part crc="74516811" name="ir.5r"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part crc="57da51a9" name="ir.3r"/>
+		<part crc="57da51a9" name="ir.3r"/>
+	</rom>
+	<rom index="1">
+		<part>0A</part>
+	</rom>
+</misterromdescription>

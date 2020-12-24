@@ -1,0 +1,27 @@
+<misterromdescription>
+	<name>Space Encounters</name>
+	<mameversion>0226</mameversion>
+	<setname>spcenctr</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1980</year>
+	<manufacturer>Midway</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="mw8080bw" input="spcenctr"/>
+	<display type="raster" rotate="0"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="spcenctr.zip" md5="none">
+		<part crc="7458b2db" name="m645h-4m33.h1"/>
+		<part crc="1b873788" name="m645g-4m32.g1"/>
+		<part crc="d4319c91" name="m645f-4m31.f1"/>
+		<part crc="9b9a1a45" name="m645e-4m30.e1"/>
+		<part crc="294d52ce" name="m645d-4m29.d1"/>
+		<part crc="ce44c923" name="m645c-4m28.c1"/>
+		<part crc="098070ab" name="m645b-4m27.b1"/>
+		<part crc="7f1d1f44" name="m645a-4m26.a1"/>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>09</part>
+	</rom>
+</misterromdescription>

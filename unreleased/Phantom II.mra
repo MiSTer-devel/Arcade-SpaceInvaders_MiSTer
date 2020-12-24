@@ -1,0 +1,30 @@
+<misterromdescription>
+	<name>Phantom II</name>
+	<mameversion>0226</mameversion>
+	<setname>phantom2</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Midway</manufacturer>
+	<category>Army / Airforce</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="mw8080bw" input="phantom2"/>
+	<display type="raster" rotate="0"/>
+	<switches default="00,00,20">
+		<dip bits="16"    name="Coinage" ids="1C_1C,2C_1C"/>
+		<dip bits="17,18" name="Game Time" ids="45+20,60+25,75+30,90+35"/>
+		<dip bits="21"    name="Service" ids="On,Off"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="phantom2.zip" md5="none">
+		<part crc="0e3c2439" name="phantom2.h"/>
+		<part crc="e8df3e52" name="phantom2.g"/>
+		<part crc="30e83c6d" name="phantom2.f"/>
+		<part crc="8c641cac" name="phantom2.e"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>1D</part>
+	</rom>
+</misterromdescription>

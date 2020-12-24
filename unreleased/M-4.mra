@@ -1,0 +1,32 @@
+<misterromdescription>
+	<name>M-4</name>
+	<mameversion>0226</mameversion>
+	<setname>m4</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1977</year>
+	<manufacturer>Midway</manufacturer>
+	<category>Army / Tank</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="mw8080bw" input="m4"/>
+	<display type="raster" rotate="0"/>
+	<switches default="00,00,10">
+		<dip bits="16,17"   name="Coinage" ids="1C_1C,1C_1OR2C,2C_1C,2C_1OR2C" />
+		<dip bits="18,19"   name="Game Time" ids="60,70,80,90"/>
+		<dip bits="20"   name="Service" ids="On,Off" values="0,1"/>
+		<dip bits="21"   name="Extended Play" ids="On,Off" />
+		<dip bits="22,23"   name="Ext Play At" ids="110,80,100,70" />
+	</switches>
+	<buttons names="Fire,Reload,-,-,Start 1P,Start 2P,Coin" default="A,B,Start,Select,R"/>
+	<rom index="0" zip="m4.zip" md5="none">
+		<part crc="9ee2a0b5" name="m4.h"/>
+		<part crc="0e84b9cb" name="m4.g"/>
+		<part crc="9ded9956" name="m4.f"/>
+		<part crc="b6983238" name="m4.e"/>
+		<part repeat="4096">00</part>
+		<part repeat="4096">00</part>
+		<part repeat="2048">FF</part>
+	</rom>
+	<rom index="1">
+		<part>1C</part>
+	</rom>
+</misterromdescription>

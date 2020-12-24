@@ -1,0 +1,34 @@
+<misterromdescription>
+	<name>Ozma Wars (set 1)</name>
+	<mameversion>0226</mameversion>
+	<setname>ozmawars</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>SNK</manufacturer>
+	<category>Space / Shooter</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="0" cpp="8080bw" input="ozmawars"/>
+	<display type="raster" rotate="270"/>
+	<switches default="00,00,00,00">
+		<dip bits="16,17"   name="Energy" ids="15k,20k,25k,35k"/>
+		<dip bits="19"   name="Bonus Energy" ids="15k,10k" />
+		<dip bits="23"   name="Coins" ids="1C/1C,1C/2C" />
+		<dip bits="24"   name="Cabinet" ids="Upright,Cocktail"/>
+	</switches>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="ozmawars.zip" md5="none">
+		<part crc="31f4397d" name="mw01"/>
+		<part crc="d8e77c62" name="mw02"/>
+		<part crc="3bfa418f" name="mw03"/>
+		<part crc="e190ce6c" name="mw04"/>
+		<part crc="3bc7d4c7" name="mw05"/>
+		<part crc="99ca2eae" name="mw06"/>
+		<part repeat="2048">00</part>
+		<part repeat="2048">00</part>
+		<part crc="aac24f34" name="01.1"/>
+		<part crc="2bdf83a0" name="02.2"/>
+	</rom>
+	<rom index="1">
+		<part>07</part>
+	</rom>
+</misterromdescription>

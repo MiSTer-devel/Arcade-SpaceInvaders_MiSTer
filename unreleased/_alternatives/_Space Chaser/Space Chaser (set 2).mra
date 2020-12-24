@@ -1,0 +1,28 @@
+<misterromdescription>
+	<name>Space Chaser (set 2)</name>
+	<mameversion>0226</mameversion>
+	<setname>schasera</setname>
+	<mratimestamp>20201030010603</mratimestamp>
+	<year>1979</year>
+	<manufacturer>Taito</manufacturer>
+	<category>Maze</category>
+	<category>Racing</category>
+	<rbf>spaceinvaders</rbf>
+	<mameinfo parent="schaser" cpp="8080bw" input="schaser"/>
+	<display type="raster" rotate="270"/>
+	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<rom index="0" zip="schaser.zip|schasera.zip" md5="none">
+		<part crc="7b0bfeed" name="rt13.bin"/>
+		<part crc="825fc8ac" name="rt15.bin"/>
+		<part crc="de9d3f85" name="rt17.bin"/>
+		<part crc="c0adab87" name="rt19.bin"/>
+		<part crc="a3b31070" name="rt21.bin"/>
+		<part repeat="2048">00</part>
+		<part repeat="4096">00</part>
+		<part crc="950cf973" name="rt06.ic2"/>
+		<part crc="950cf973" name="rt06.ic2"/>
+	</rom>
+	<rom index="1">
+		<part>23</part>
+	</rom>
+</misterromdescription>
