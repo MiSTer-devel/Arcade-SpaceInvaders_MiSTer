@@ -23,16 +23,16 @@
         </switches>
 
 	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
-	<rom index="0" zip="lupin3a.zip" md5="none">
+	<rom index="0" zip="lupin3.zip|lupin3a.zip" md5="none">
 		<!-- 8k -->
-		<part name="lp12.bin"/>
-		<part name="lp13.bin"/>
-		<part name="lp14.bin"/>
-		<part name="lp15.bin"/>
+		<part crc="68a7f47a" name="lp12.bin"/>
+		<part crc="cae9a17b" name="lp13.bin"/>
+		<part crc="3553b9e4" name="lp14.bin"/>
+		<part crc="acbeef64" name="lp15.bin"/>
 		<!-- 8k -->
-		<part name="lp16.bin"/>
-		<part name="lp17.bin"/>
-		<part name="lp18.bin"/>
+		<part crc="19fcdc54" name="lp16.bin"/>
+		<part crc="66289ab2" name="lp17.bin"/>
+		<part crc="2f07b4ba" name="lp18.bin"/>
                 <part repeat="2048">00</part>
 	</rom>
     <rom index="3">
@@ -59,7 +59,7 @@
              00 00 000000 000000
              14 31 01E3EC 021F23
         </PART>
-    </ROM>
+    </rom>
     <rom index="4">
         <PART>
 858587878587857F746860544F4C4F546068717C859095A1A9B2B5BDBDC3C4C4
@@ -4409,5 +4409,5 @@ DC023E03AB03B6039C035D034603EA02C7021602E6014F01F3007B0077FF70FE
 B4FD56FD02FDBDFC17FD9EFDD0FD91FEA1FEE8FE1BFF35FF51FF88FF16FF2EFF
 BBFE4CFE
         </PART>
-    </ROM>
+    </rom>
 </misterromdescription>
