@@ -19,7 +19,7 @@ set_global_assignment -name VHDL_FILE rtl/Midway_Tone_Gen.vhd
 set_global_assignment -name VHDL_FILE rtl/OVO.vhd
 set_global_assignment -name VHDL_FILE rtl/bb_clouds.vhd
 set_global_assignment -name VHDL_FILE rtl/bb_audio.vhd
-set_global_assignment -name VHDL_FILE rtl/polaris_cloud.vhd
+set_global_assignment -name VHDL_FILE rtl/Polaris_cloud.vhd
 set_global_assignment -name VHDL_FILE rtl/zap_audio.vhd
 set_global_assignment -name VHDL_FILE rtl/maze_audio.vhd
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/virtualgun.sv
