@@ -55,7 +55,10 @@ module emu
     output [1:0]  VGA_SL,
 	output        VGA_SCALER, // Force VGA scaler
 
+	input  [11:0] HDMI_WIDTH,
+	input  [11:0] HDMI_HEIGHT,
 
+`ifdef USE_FB
 	// Use framebuffer from DDRAM (USE_FB=1 in qsf)
 	// FB_FORMAT:
 	//    [2:0] : 011=8bpp(palette) 100=16bpp 101=24bpp 110=32bpp
@@ -63,7 +66,6 @@ module emu
 	//    [4]   : 0=RGB  1=BGR (for 16/24/32 modes)
 	//
 	// FB_STRIDE either 0 (rounded to 256 bytes) or multiple of 16 bytes.
-
 	output        FB_EN,
 	output  [4:0] FB_FORMAT,
 	output [11:0] FB_WIDTH,
@@ -74,7 +76,6 @@ module emu
 	input         FB_LL,
 	output        FB_FORCE_BLANK,
 
-
 	// Palette control for 8bit modes.
 	// Ignored for other video modes.
 	output        FB_PAL_CLK,
@@ -82,8 +83,8 @@ module emu
 	output [23:0] FB_PAL_DOUT,
 	input  [23:0] FB_PAL_DIN,
 	output        FB_PAL_WR,
+`endif
 
-	
 	output        LED_USER,  // 1 - ON, 0 - OFF.
 
 	// b[1]: 0 - LED status is system status OR'd with b[0]
@@ -103,20 +104,7 @@ module emu
 	output [15:0] AUDIO_R,
 	output        AUDIO_S,    // 1 - signed audio samples, 0 - unsigned
 
-	
-	//SDRAM interface with lower latency
-	output        SDRAM_CLK,
-	output        SDRAM_CKE,
-	output [12:0] SDRAM_A,
-	output  [1:0] SDRAM_BA,
-	inout  [15:0] SDRAM_DQ,
-	output        SDRAM_DQML,
-	output        SDRAM_DQMH,
-	output        SDRAM_nCS,
-	output        SDRAM_nCAS,
-	output        SDRAM_nRAS,
-	output        SDRAM_nWE,  
-	
+`ifdef USE_DDRAM
 	//High latency DDR3 RAM interface
 	//Use for non-critical time purposes
 	output        DDRAM_CLK,
@@ -129,6 +117,21 @@ module emu
 	output [63:0] DDRAM_DIN,
 	output  [7:0] DDRAM_BE,
 	output        DDRAM_WE,
+`endif
+
+`ifdef USE_SDRAM
+	output        SDRAM_CLK,
+	output        SDRAM_CKE,
+	output [12:0] SDRAM_A,
+	output  [1:0] SDRAM_BA,
+	inout  [15:0] SDRAM_DQ,
+	output        SDRAM_DQML,
+	output        SDRAM_DQMH,
+	output        SDRAM_nCS,
+	output        SDRAM_nCAS,
+	output        SDRAM_nRAS,
+	output        SDRAM_nWE,
+`endif
 
 	
 	
@@ -214,11 +217,13 @@ wire        forced_scandoubler;
 wire        direct_video;
 
 wire        ioctl_download;
+wire        ioctl_upload;
+wire  [7:0] ioctl_index;
 wire        ioctl_wr;
 wire [24:0] ioctl_addr;
 wire  [7:0] ioctl_dout;
-wire  [7:0] ioctl_index;
-wire        ioctl_wait;
+wire  [7:0] ioctl_din;
+
 
 reg	[7:0] machine_info;
 
@@ -247,13 +252,14 @@ hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
    .gamma_bus(gamma_bus),
    .direct_video(direct_video),
 
-   .ioctl_download(ioctl_download),
-   .ioctl_wr(ioctl_wr),
-   .ioctl_addr(ioctl_addr),
-   .ioctl_dout(ioctl_dout),
-   .ioctl_index(ioctl_index),
-	.ioctl_wait(ioctl_wait),
-	
+	.ioctl_upload(ioctl_upload),
+	.ioctl_download(ioctl_download),
+	.ioctl_wr(ioctl_wr),
+	.ioctl_addr(ioctl_addr),
+	.ioctl_dout(ioctl_dout),
+	.ioctl_din(ioctl_din),
+	.ioctl_index(ioctl_index),
+
    .sdram_sz(sdram_sz),
 
 	
