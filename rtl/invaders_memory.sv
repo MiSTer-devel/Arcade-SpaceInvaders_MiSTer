@@ -21,7 +21,14 @@ module invaders_memory(
 	input            mod_polaris,
 	input            mod_lupin,
 	input				  mod_indianbattle,
-	input				  mod_spacechaser
+	input				  mod_spacechaser,
+	
+	// Hiscore system
+	input      [15:0] hs_address,
+	input       [7:0] hs_data_in,
+	output      [7:0] hs_data_out,
+	input             hs_write,
+	input             hs_access
 );
 
 wire [7:0] color_prom_out_rom;
@@ -132,19 +139,26 @@ wire [15:0] VortexAddr = Ram_Addr + 1'b1;
 wire [7:0]  VortexColour;
 
 assign Vortex_bit = VortexColour[0];
-		
+
+
+// Hiscore system
+// - Shares RAM port with extra Vortex functionality - Vortex has no high score support so no conflict
+assign hs_data_out = VortexColour;
+
 dpram #(
 	.addr_width_g(13),
 	.data_width_g(8)) 
 u_ram0(
-	.address_a(Ram_Addr[12:0]),
 	.clock_a(Clock),
+	.address_a(Ram_Addr[12:0]),
 	.data_a(Ram_in),
 	.wren_a(~RW_n),
 	.q_a(Ram_out),
 	
-	.address_b(VortexAddr[12:0]),
 	.clock_b(Clock),
+	.address_b(hs_access ? hs_address[12:0] : VortexAddr[12:0]),
+	.wren_b(hs_access ? hs_write : 1'b0),
+	.data_b(hs_access ? hs_data_in : Ram_in),
 	.q_b(VortexColour)
 	);
 endmodule 

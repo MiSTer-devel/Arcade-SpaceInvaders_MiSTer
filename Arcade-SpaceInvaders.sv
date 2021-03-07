@@ -52,7 +52,7 @@ module emu
 	output        VGA_VS,
 	output        VGA_DE,    // = ~(VBlank | HBlank)
 	output        VGA_F1,
-    output [1:0]  VGA_SL,
+	output [1:0]  VGA_SL,
 	output        VGA_SCALER, // Force VGA scaler
 
 	input  [11:0] HDMI_WIDTH,
@@ -93,16 +93,16 @@ module emu
 	output  [1:0] LED_POWER,
 	output  [1:0] LED_DISK,
 
+	input         CLK_AUDIO, // 24.576 MHz
+	output [15:0] AUDIO_L,
+	output [15:0] AUDIO_R,
+	output        AUDIO_S,   // 1 - signed audio samples, 0 - unsigned
+	output  [1:0] AUDIO_MIX, // 0 - no mix, 1 - 25%, 2 - 50%, 3 - 100% (mono)
 
 	// I/O board button press simulation (active high)
 	// b[1]: user button
 	// b[0]: osd button
-	output  [1:0] BUTTONS,	
-
-   input         CLK_AUDIO, // 24.576 MHz
-	output [15:0] AUDIO_L,
-	output [15:0] AUDIO_R,
-	output        AUDIO_S,    // 1 - signed audio samples, 0 - unsigned
+	output  [1:0] BUTTONS,
 
 `ifdef USE_DDRAM
 	//High latency DDR3 RAM interface
@@ -133,17 +133,15 @@ module emu
 	output        SDRAM_nWE,
 `endif
 
-	
-	
 	// Open-drain User port.
 	// 0 - D+/RX
 	// 1 - D-/TX
 	// 2..6 - USR2..USR6
 	// Set USER_OUT to 1 to read from USER_IN.
 	input   [6:0] USER_IN,
-	output  [6:0] USER_OUT
-	
-	
+	output  [6:0] USER_OUT,
+
+	input         OSD_STATUS
 );
 
 assign VGA_F1    = 0;
@@ -156,6 +154,8 @@ assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 assign BUTTONS = 0;
+
+assign AUDIO_MIX = 0;
 
 wire [1:0] ar = status[26:25];
 
@@ -240,17 +240,17 @@ wire [15:0] sdram_sz;
 
 hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 (
-   .clk_sys(clk_sys),
-   .HPS_BUS(HPS_BUS),
+	.clk_sys(clk_sys),
+	.HPS_BUS(HPS_BUS),
 
-   .conf_str(CONF_STR),
+	.conf_str(CONF_STR),
 
-   .buttons(buttons),
-   .status(status),
-   .status_menumask({&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
-   .forced_scandoubler(forced_scandoubler),
-   .gamma_bus(gamma_bus),
-   .direct_video(direct_video),
+	.buttons(buttons),
+	.status(status),
+	.status_menumask({&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
+	.forced_scandoubler(forced_scandoubler),
+	.gamma_bus(gamma_bus),
+	.direct_video(direct_video),
 
 	.ioctl_upload(ioctl_upload),
 	.ioctl_download(ioctl_download),
@@ -260,15 +260,14 @@ hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 	.ioctl_din(ioctl_din),
 	.ioctl_index(ioctl_index),
 
-   .sdram_sz(sdram_sz),
+	.sdram_sz(sdram_sz),
 
-	
-   .joystick_0(joy1),
-   .joystick_1(joy2),
-   .joystick_2(joy3),
-   .joystick_3(joy4),
-   .joystick_analog_0(joya),
-   .joystick_analog_1(joya2),
+	.joystick_0(joy1),
+	.joystick_1(joy2),
+	.joystick_2(joy3),
+	.joystick_3(joy4),
+	.joystick_analog_0(joya),
+	.joystick_analog_1(joya2),
 	.ps2_mouse(ps2_mouse)
 );
 
@@ -329,7 +328,6 @@ wire m_fire4b  = joy4[5];
 wire m_fire4c  = joy4[6];
 wire m_fire4d  = joy4[7];
 */
-
 
 wire [2:0] ms_col;
 wire [2:0] bs_col;
@@ -1544,7 +1542,8 @@ invaderst invaderst(
 		.ShiftReverse(ShiftReverse),
 
 		.mod_vortex(mod==mod_vortex),
-		.Vortex_Col(Vortex_Col)		
+		.Vortex_Col(Vortex_Col),
+
    );
 		  
 	invaders_memory invaders_memory (
@@ -1568,7 +1567,13 @@ invaderst invaderst(
 			.mod_polaris(mod==mod_polaris),
 			.mod_lupin(mod==mod_lupin),
 			.mod_indianbattle(mod==mod_indianbattle),
-			.mod_spacechaser(mod==mod_spacechaser)
+			.mod_spacechaser(mod==mod_spacechaser),
+
+			.hs_address(hs_address),
+			.hs_data_in(hs_data_in),
+			.hs_data_out(ioctl_din),
+			.hs_write(hs_write),
+			.hs_access(hs_access)
 	);
 
 invaders_audio invaders_audio (
@@ -1875,6 +1880,39 @@ cloud cloud
 	.h(HCount),
 	.flip(DoScreenFlip),
 	.pixel(PolarisPixel)
+);
+
+
+// HISCORE SYSTEM
+
+wire [15:0]hs_address;
+wire [7:0]hs_data_in;
+wire hs_write;
+wire hs_access;
+
+hiscore #(
+	.HS_ADDRESSWIDTH(16),
+	.HS_DUMPINDEX(5),
+	.CFG_ADDRESSWIDTH(6),
+	.CFG_LENGTHWIDTH(2),
+	.DELAY_CHECKWAIT(4'b1111),
+	.DELAY_CHECKHOLD(1'b1)
+
+) hi (
+	.clk(clk_sys),
+	.reset(reset),
+	.delay(1'b0),
+	.ioctl_upload(ioctl_upload),
+	.ioctl_download(ioctl_download),
+	.ioctl_wr(ioctl_wr),
+	.ioctl_addr(ioctl_addr),
+	.ioctl_dout(ioctl_dout),
+	.ioctl_din(ioctl_din),
+	.ioctl_index(ioctl_index),
+	.ram_address(hs_address),
+	.data_to_ram(hs_data_in),
+	.ram_write(hs_write),
+	.ram_access(hs_access)
 );
 
 

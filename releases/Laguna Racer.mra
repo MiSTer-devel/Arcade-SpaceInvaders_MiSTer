@@ -17946,4 +17946,12 @@ D1F93A0335094C1030185C1F1C1EDD183B10940333F827F5FDF714FD97FF1D04
 D1086519AB1F
         </PART>
     </rom>
+	<rom index="3" md5="none">
+		<part>
+		 00 00 20 11 00 09 00 00
+		 00 00 20 05 00 03 00 00
+		 00 00 20 31 00 01 89 89
+		</part>
+	</rom>
+	<nvram index="5" size="13"/>
 </misterromdescription>

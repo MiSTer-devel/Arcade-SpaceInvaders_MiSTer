@@ -32,4 +32,11 @@
 	<rom index="1">
 		<part>0D</part>
 	</rom>
+	<rom index="3" md5="none">
+		<part>
+		 00 00 20 F4 00 02 00 05
+		 00 00 23 40 00 0A 1B 1B
+		</part>
+	</rom>
+	<nvram index="5" size="12"/>
 </misterromdescription>

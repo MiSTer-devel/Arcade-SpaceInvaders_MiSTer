@@ -2573,4 +2573,11 @@ E900AA0011002300070120027D031B04BB04D8047804130428034402E400E3FF
 25002E0025002E00
 		</part>
 	</rom>
+	<rom index="3" md5="none">
+		<part>
+		00 00 20 15 00 02 00 00
+		00 00 3E A0 01 40 00 66
+		</part>
+	</rom>
+	<nvram index="5" size="322"/>
 </misterromdescription>

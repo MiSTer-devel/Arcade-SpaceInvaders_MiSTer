@@ -159,4 +159,10 @@
 	<rom index="1">
 		<part>00</part>
 	</rom>
+	<rom index="3" md5="none">
+		<part>
+		 00 00 20 F4 00 02 00 00
+		</part>
+	</rom>
+	<nvram index="5" size="2"/>
 </misterromdescription>
