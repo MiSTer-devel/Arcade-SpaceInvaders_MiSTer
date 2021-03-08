@@ -52,10 +52,13 @@ module emu
 	output        VGA_VS,
 	output        VGA_DE,    // = ~(VBlank | HBlank)
 	output        VGA_F1,
-    output [1:0]  VGA_SL,
+	output [1:0]  VGA_SL,
 	output        VGA_SCALER, // Force VGA scaler
 
+	input  [11:0] HDMI_WIDTH,
+	input  [11:0] HDMI_HEIGHT,
 
+`ifdef USE_FB
 	// Use framebuffer from DDRAM (USE_FB=1 in qsf)
 	// FB_FORMAT:
 	//    [2:0] : 011=8bpp(palette) 100=16bpp 101=24bpp 110=32bpp
@@ -63,7 +66,6 @@ module emu
 	//    [4]   : 0=RGB  1=BGR (for 16/24/32 modes)
 	//
 	// FB_STRIDE either 0 (rounded to 256 bytes) or multiple of 16 bytes.
-
 	output        FB_EN,
 	output  [4:0] FB_FORMAT,
 	output [11:0] FB_WIDTH,
@@ -74,7 +76,6 @@ module emu
 	input         FB_LL,
 	output        FB_FORCE_BLANK,
 
-
 	// Palette control for 8bit modes.
 	// Ignored for other video modes.
 	output        FB_PAL_CLK,
@@ -82,8 +83,8 @@ module emu
 	output [23:0] FB_PAL_DOUT,
 	input  [23:0] FB_PAL_DIN,
 	output        FB_PAL_WR,
+`endif
 
-	
 	output        LED_USER,  // 1 - ON, 0 - OFF.
 
 	// b[1]: 0 - LED status is system status OR'd with b[0]
@@ -92,31 +93,18 @@ module emu
 	output  [1:0] LED_POWER,
 	output  [1:0] LED_DISK,
 
+	input         CLK_AUDIO, // 24.576 MHz
+	output [15:0] AUDIO_L,
+	output [15:0] AUDIO_R,
+	output        AUDIO_S,   // 1 - signed audio samples, 0 - unsigned
+	output  [1:0] AUDIO_MIX, // 0 - no mix, 1 - 25%, 2 - 50%, 3 - 100% (mono)
 
 	// I/O board button press simulation (active high)
 	// b[1]: user button
 	// b[0]: osd button
-	output  [1:0] BUTTONS,	
+	output  [1:0] BUTTONS,
 
-   input         CLK_AUDIO, // 24.576 MHz
-	output [15:0] AUDIO_L,
-	output [15:0] AUDIO_R,
-	output        AUDIO_S,    // 1 - signed audio samples, 0 - unsigned
-
-	
-	//SDRAM interface with lower latency
-	output        SDRAM_CLK,
-	output        SDRAM_CKE,
-	output [12:0] SDRAM_A,
-	output  [1:0] SDRAM_BA,
-	inout  [15:0] SDRAM_DQ,
-	output        SDRAM_DQML,
-	output        SDRAM_DQMH,
-	output        SDRAM_nCS,
-	output        SDRAM_nCAS,
-	output        SDRAM_nRAS,
-	output        SDRAM_nWE,  
-	
+`ifdef USE_DDRAM
 	//High latency DDR3 RAM interface
 	//Use for non-critical time purposes
 	output        DDRAM_CLK,
@@ -129,18 +117,31 @@ module emu
 	output [63:0] DDRAM_DIN,
 	output  [7:0] DDRAM_BE,
 	output        DDRAM_WE,
+`endif
 
-	
-	
+`ifdef USE_SDRAM
+	output        SDRAM_CLK,
+	output        SDRAM_CKE,
+	output [12:0] SDRAM_A,
+	output  [1:0] SDRAM_BA,
+	inout  [15:0] SDRAM_DQ,
+	output        SDRAM_DQML,
+	output        SDRAM_DQMH,
+	output        SDRAM_nCS,
+	output        SDRAM_nCAS,
+	output        SDRAM_nRAS,
+	output        SDRAM_nWE,
+`endif
+
 	// Open-drain User port.
 	// 0 - D+/RX
 	// 1 - D-/TX
 	// 2..6 - USR2..USR6
 	// Set USER_OUT to 1 to read from USER_IN.
 	input   [6:0] USER_IN,
-	output  [6:0] USER_OUT
-	
-	
+	output  [6:0] USER_OUT,
+
+	input         OSD_STATUS
 );
 
 assign VGA_F1    = 0;
@@ -153,6 +154,8 @@ assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 assign BUTTONS = 0;
+
+assign AUDIO_MIX = 0;
 
 wire [1:0] ar = status[26:25];
 
@@ -214,11 +217,13 @@ wire        forced_scandoubler;
 wire        direct_video;
 
 wire        ioctl_download;
+wire        ioctl_upload;
+wire  [7:0] ioctl_index;
 wire        ioctl_wr;
 wire [24:0] ioctl_addr;
 wire  [7:0] ioctl_dout;
-wire  [7:0] ioctl_index;
-wire        ioctl_wait;
+wire  [7:0] ioctl_din;
+
 
 reg	[7:0] machine_info;
 
@@ -235,34 +240,34 @@ wire [15:0] sdram_sz;
 
 hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
 (
-   .clk_sys(clk_sys),
-   .HPS_BUS(HPS_BUS),
+	.clk_sys(clk_sys),
+	.HPS_BUS(HPS_BUS),
 
-   .conf_str(CONF_STR),
+	.conf_str(CONF_STR),
 
-   .buttons(buttons),
-   .status(status),
-   .status_menumask({&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
-   .forced_scandoubler(forced_scandoubler),
-   .gamma_bus(gamma_bus),
-   .direct_video(direct_video),
+	.buttons(buttons),
+	.status(status),
+	.status_menumask({&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
+	.forced_scandoubler(forced_scandoubler),
+	.gamma_bus(gamma_bus),
+	.direct_video(direct_video),
 
-   .ioctl_download(ioctl_download),
-   .ioctl_wr(ioctl_wr),
-   .ioctl_addr(ioctl_addr),
-   .ioctl_dout(ioctl_dout),
-   .ioctl_index(ioctl_index),
-	.ioctl_wait(ioctl_wait),
-	
-   .sdram_sz(sdram_sz),
+	.ioctl_upload(ioctl_upload),
+	.ioctl_download(ioctl_download),
+	.ioctl_wr(ioctl_wr),
+	.ioctl_addr(ioctl_addr),
+	.ioctl_dout(ioctl_dout),
+	.ioctl_din(ioctl_din),
+	.ioctl_index(ioctl_index),
 
-	
-   .joystick_0(joy1),
-   .joystick_1(joy2),
-   .joystick_2(joy3),
-   .joystick_3(joy4),
-   .joystick_analog_0(joya),
-   .joystick_analog_1(joya2),
+	.sdram_sz(sdram_sz),
+
+	.joystick_0(joy1),
+	.joystick_1(joy2),
+	.joystick_2(joy3),
+	.joystick_3(joy4),
+	.joystick_analog_0(joya),
+	.joystick_analog_1(joya2),
 	.ps2_mouse(ps2_mouse)
 );
 
@@ -323,7 +328,6 @@ wire m_fire4b  = joy4[5];
 wire m_fire4c  = joy4[6];
 wire m_fire4d  = joy4[7];
 */
-
 
 wire [2:0] ms_col;
 wire [2:0] bs_col;
@@ -1538,7 +1542,8 @@ invaderst invaderst(
 		.ShiftReverse(ShiftReverse),
 
 		.mod_vortex(mod==mod_vortex),
-		.Vortex_Col(Vortex_Col)		
+		.Vortex_Col(Vortex_Col),
+
    );
 		  
 	invaders_memory invaders_memory (
@@ -1562,7 +1567,13 @@ invaderst invaderst(
 			.mod_polaris(mod==mod_polaris),
 			.mod_lupin(mod==mod_lupin),
 			.mod_indianbattle(mod==mod_indianbattle),
-			.mod_spacechaser(mod==mod_spacechaser)
+			.mod_spacechaser(mod==mod_spacechaser),
+
+			.hs_address(hs_address),
+			.hs_data_in(hs_data_in),
+			.hs_data_out(ioctl_din),
+			.hs_write(hs_write),
+			.hs_access(hs_access)
 	);
 
 invaders_audio invaders_audio (
@@ -1869,6 +1880,39 @@ cloud cloud
 	.h(HCount),
 	.flip(DoScreenFlip),
 	.pixel(PolarisPixel)
+);
+
+
+// HISCORE SYSTEM
+
+wire [15:0]hs_address;
+wire [7:0]hs_data_in;
+wire hs_write;
+wire hs_access;
+
+hiscore #(
+	.HS_ADDRESSWIDTH(16),
+	.HS_DUMPINDEX(5),
+	.CFG_ADDRESSWIDTH(6),
+	.CFG_LENGTHWIDTH(2),
+	.DELAY_CHECKWAIT(4'b1111),
+	.DELAY_CHECKHOLD(1'b1)
+
+) hi (
+	.clk(clk_sys),
+	.reset(reset),
+	.delay(1'b0),
+	.ioctl_upload(ioctl_upload),
+	.ioctl_download(ioctl_download),
+	.ioctl_wr(ioctl_wr),
+	.ioctl_addr(ioctl_addr),
+	.ioctl_dout(ioctl_dout),
+	.ioctl_din(ioctl_din),
+	.ioctl_index(ioctl_index),
+	.ram_address(hs_address),
+	.data_to_ram(hs_data_in),
+	.ram_write(hs_write),
+	.ram_access(hs_access)
 );
 
 

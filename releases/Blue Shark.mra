@@ -19886,4 +19886,10 @@ BF06B6074C06720313021604FD06C008F2080809C209B90A270B2A0B1A0B490B
 230CA30C910C240CB80B090B970A130A390A7A0AD00949071F04CB01B7002200
         </part>
     </rom>
+	<rom index="3" md5="none">
+		<part>
+		00 00 20 0A 00 05 00 00
+		</part>
+	</rom>
+	<nvram index="5" size="5"/>
 </misterromdescription>
