@@ -1,31 +1,49 @@
 <misterromdescription>
 	<name>Blue Shark</name>
-	<mameversion>0226</mameversion>
-	<setname>blueshrk</setname>
-	<mratimestamp>20201030010603</mratimestamp>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
 	<year>1978</year>
 	<manufacturer>Midway</manufacturer>
-	<category>Platform / Water Diving</category>
+	<category>Shooter - Gallery</category>
+
+	<setname>blueshrk</setname>
+	<parent>blueshrk</parent>
+	<mameversion>0226</mameversion>
 	<rbf>spaceinvaders</rbf>
-	<mameinfo parent="0" cpp="mw8080bw" input="blueshrk"/>
-	<display type="raster" rotate="0"/>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick></joystick>
+	<special_controls>positional</special_controls>
+	<num_buttons>1</num_buttons>
+	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+
 	<switches default="00,00,80">
-		<dip bits="21,22" name="Replay" ids="None,14k,18k,22k"/>
-		<dip bits="23"    name="Service" ids="Off,On" values="1,0"/>
-	</switches>
-	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
-	<rom index="0" zip="blueshrk.zip" md5="none">
-		<part crc="4ff94187" name="blueshrk.h"/>
-		<part crc="e49368fd" name="blueshrk.g"/>
-		<part crc="86cca79d" name="blueshrk.f"/>
+		<dip bits="21,22" ids="None,14k,18k,22k" name="Replay"></dip>
+		<dip bits="23" ids="Off,On" name="Service" values="1,0"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>04</part>
+		</rom>
+	<rom index="0" md5="none" zip="blueshrk.zip">
+		<part crc="4ff94187" name="blueshrk.h"></part>
+		<part crc="e49368fd" name="blueshrk.g"></part>
+		<part crc="86cca79d" name="blueshrk.f"></part>
 		<part repeat="2048">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-	</rom>
-	<rom index="1">
-		<part>04</part>
-	</rom>
+		</rom>
 	<rom index="2">
 		<part>
 8D8A7A008D8A7C008E8A7E008F8B7F00
@@ -14590,7 +14608,7 @@ A29D9800A29D9900A19D9900A09D9800
 19291D001A2A1E001B2A1D001C2B1D00
 		</part>
 	</rom>
-    <rom index="3">
+	<rom index="3">
         <part>
 	  00 00 000000 000000
           12 32 017B88 02429F
@@ -14600,8 +14618,8 @@ A29D9800A29D9900A19D9900A09D9800
           12 31 000000 009543
         </part>
     </rom>
-    <rom index="4">
-        <part>
+	<rom index="4">
+		<part>
 C6FFF5FF7F003700230015004E0088008C00B2000001300150012B0118012A01
 1401E300DE00D700850066005000A900AF00C80077001600E5FFB3FF58FF52FF
 6BFFA3FFB3FF4CFF1AFF5EFFAEFF88FF1CFF05FFD9FEF6FE86FF69FF0BFF6EFF
@@ -19886,10 +19904,10 @@ BF06B6074C06720313021604FD06C008F2080809C209B90A270B2A0B1A0B490B
 230CA30C910C240CB80B090B970A130A390A7A0AD00949071F04CB01B7002200
         </part>
     </rom>
-	<rom index="3" md5="none">
-		<part>
-		00 00 20 0A 00 05 00 00
-		</part>
-	</rom>
-	<nvram index="5" size="5"/>
+
+	<nvram index="5" size="5"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
 </misterromdescription>

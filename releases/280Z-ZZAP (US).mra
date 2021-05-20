@@ -1,30 +1,50 @@
 <misterromdescription>
 	<name>280Z-ZZAP</name>
-	<mameversion>0226</mameversion>
-	<setname>280zzzap</setname>
-	<mratimestamp>20201030010603</mratimestamp>
+	<region>USA</region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
 	<year>1976</year>
-	<manufacturer>Dave Nutting Associates / Midway</manufacturer>
-	<category>Games / Netlist</category>
-	<category>Racing / 3D</category>
-	<rbf>spaceinvaders</rbf>
-	<mameinfo parent="0" cpp="mw8080bw" input="zzzap"/>
-	<display type="raster" rotate="0"/>
-	<switches default="00,00,00">
-		<dip bits="16,17"   name="Coinage" ids="1C_1C,2C_1C,1C_2C,2C_3C"/>
-		<dip bits="18,19"   name="Game Time" ids="60+30,80+40,99+50,Test" values="3,0,2,1"/>
-		<dip bits="20,21"   name="Extended Time At" ids="2.5,2.0,None,None"/>
-		<dip bits="22,23"   name="Language" ids="English,German,French,Spanish"/>
-	</switches>
-	<buttons names="Gear,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
+	<manufacturer>Dave Nutting Associates</manufacturer>
+	<manufacturer>Midway</manufacturer>
+	<category>Racing</category>
 
-	<rom index="0" zip="280zzzap.zip" md5="none">
-		<part crc="1fa86e1c" name="zzzaph"/>
-		<part crc="9639bc6b" name="zzzapg"/>
-		<part crc="adc6ede1" name="zzzapf"/>
-		<part crc="472493d6" name="zzzape"/>
-		<part crc="4c240ee1" name="zzzapd"/>
-		<part crc="6e85aeaf" name="zzzapc"/>
+	<setname>280zzzap</setname>
+	<parent>280zzzap</parent>
+	<mameversion>0226</mameversion>
+	<rbf>spaceinvaders</rbf>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick></joystick>
+	<special_controls>paddle</special_controls>
+	<num_buttons>0</num_buttons>
+	<buttons default="A,Start,Select,R" names="Gear,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+
+	<switches default="00,00,00">
+		<dip bits="16,17" ids="1C_1C,2C_1C,1C_2C,2C_3C" name="Coinage"></dip>
+		<dip bits="18,19" ids="60+30,80+40,99+50,Test" name="Game Time" values="3,0,2,1"></dip>
+		<dip bits="20,21" ids="2.5,2.0,None,None" name="Extended Time At"></dip>
+		<dip bits="22,23" ids="English,German,French,Spanish" name="Language"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>03</part>
+		</rom>
+	<rom index="0" md5="none" zip="280zzzap.zip">
+		<part crc="1fa86e1c" name="zzzaph"></part>
+		<part crc="9639bc6b" name="zzzapg"></part>
+		<part crc="adc6ede1" name="zzzapf"></part>
+		<part crc="472493d6" name="zzzape"></part>
+		<part crc="4c240ee1" name="zzzapd"></part>
+		<part crc="6e85aeaf" name="zzzapc"></part>
 		<part repeat="2048">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
@@ -163,9 +183,9 @@
 	</rom>
 	<rom index="1">
 		<part>03</part>
-	</rom>
+	</rom>	
 	<rom index="2">
-		<part>
+	<part>
 00000000000000000000000000000000
 00000000000000000000000000000000
 00000000000000000000000000000000
@@ -14726,9 +14746,9 @@ A2674500784C34005132230084543900
 00000000000000000000000000000000
 00000000000000000000000000000000
 00000000000000000000000001010100
-		</part>
-	</rom>
-    <rom index="3">
+		</part>	
+		</rom>
+	<rom index="3">
          <!-- boom.wav -->
          <!-- tyre.wav -->
          <!-- hiss.wav -->
@@ -14747,8 +14767,14 @@ A2674500784C34005132230084543900
              11 32 009568 013083
         </part>
     </rom>
-    <rom index="4">
-        <part>
+	<rom index="3" md5="none">
+		<part>
+		 00 00 20 3D 00 02 00 00
+		 00 00 20 29 00 04 00 00
+		</part>
+	</rom>
+	<rom index="4">
+		<part>
 1E2ADA51D152FD584046E83017160E094D06A90DDC0A04FFEFEEDDE73BED0DFF
 DB0C610C83FC8DE9EFE0A6E23DEC8FFC0D0290F40FD87FBF42B6C8B811C7A6D3
 A5D171C9D6C691C3D8B755A1AD880080008000800080D78D27A0A8ABAFAD4EAC
@@ -18077,12 +18103,11 @@ F7F828F78305C514D5158613EB16961351042FF8ADF770064118541D8B12C403
 D1F93A0335094C1030185C1F1C1EDD183B10940333F827F5FDF714FD97FF1D04
 D1086519AB1F
         </part>
-    </rom>
-	<rom index="3" md5="none">
-		<part>
-		 00 00 20 3D 00 02 00 00
-		 00 00 20 29 00 04 00 00
-		</part>
-	</rom>
-	<nvram index="5" size="6"/>
+		</rom>
+
+	<nvram index="5" size="6"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
 </misterromdescription>

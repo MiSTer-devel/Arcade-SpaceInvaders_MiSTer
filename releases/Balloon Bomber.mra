@@ -1,44 +1,63 @@
 <misterromdescription>
 	<name>Balloon Bomber</name>
-	<mameversion>0219</mameversion>
-	<setname>ballbomb</setname>
-	<mratimestamp>20200308234519</mratimestamp>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
 	<year>1980</year>
 	<manufacturer>Taito</manufacturer>
-	<category>Army / Antiaircraft</category>
-	<category>Maze / Balloons</category>
-	<category>Sports / Shooting</category>
+	<category>Shooter - Gallery</category>
+
+	<setname>ballbomb</setname>
+	<parent>invaders</parent>
+	<mameversion>0219</mameversion>
 	<rbf>spaceinvaders</rbf>
-	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
-        <switches default="00,00,00,00">
-                <dip bits="16,17"   name="Lives" ids="3,4,5,6"/>
-                <dip bits="18"      name="Tilt" ids="Off,On"/>
-                <dip bits="19"      name="Bonus Life" ids="1500,1000"/>
-                <dip bits="24"      name="Cabinet" ids="Upright,Cocktail"/>
-        </switches>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>vertical (ccw)</rotation>
+	<flip>yes</flip>
+
+	<players>2 (alternating)</players>
+	<joystick>2-way horizontal</joystick>
+	<special_controls></special_controls>
+	<num_buttons>1</num_buttons>
+	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+
+	<switches default="00,00,00,00">
+		<dip bits="16,17" ids="3,4,5,6" name="Lives"></dip>
+		<dip bits="18" ids="Off,On" name="Tilt"></dip>
+		<dip bits="19" ids="1500,1000" name="Bonus Life"></dip>
+		<dip bits="24" ids="Upright,Cocktail" name="Cabinet"></dip>
+		</switches>
+
 	<rom index="1">
 		<part>10</part>
-	</rom>
-	<rom index="0" zip="ballbomb.zip" md5="beac40af696fe59551f759d46278ea68">
-		<part crc="551585b5" name="tn01"/>
-		<part crc="7e1f734f" name="tn02"/>
-		<part crc="d93e20bc" name="tn03"/>
-		<part crc="d0689a22" name="tn04"/>
-		<part crc="5d5e94f1" name="tn05-1"/>
+		</rom>
+	<rom index="0" md5="beac40af696fe59551f759d46278ea68" zip="ballbomb.zip">
+		<part crc="551585b5" name="tn01"></part>
+		<part crc="7e1f734f" name="tn02"></part>
+		<part crc="d93e20bc" name="tn03"></part>
+		<part crc="d0689a22" name="tn04"></part>
+		<part crc="5d5e94f1" name="tn05-1"></part>
 		<part repeat="2048">00</part>
 		<part repeat="2048">00</part>
 		<part repeat="2048">00</part>
-		<part crc="7ec554c4" name="tn06"/>
-		<part crc="deb0ac82" name="tn07"/>
-	</rom>
-    <rom index="3">
-         <!-- 3-01 - hit balloon.wav -->
-         <!-- 3-02 - Shot.wav -->
-         <!-- 3-04 - base hit.wav -->
-         <!-- 3-08 - hit bomb.wav -->
-         <!-- 5-04 - plane.wav -->
-         <!-- 5-10 - bomb drops.wav -->
-        <PART>
+		<part crc="7ec554c4" name="tn06"></part>
+		<part crc="deb0ac82" name="tn07"></part>
+		</rom>
+	<rom index="2"></rom>
+	<rom index="3">
+		<!-- 3-01 - hit balloon.wav -->
+		<!-- 3-02 - Shot.wav -->
+		<!-- 3-04 - base hit.wav -->
+		<!-- 3-08 - hit bomb.wav -->
+		<!-- 5-04 - plane.wav -->
+		<!-- 5-10 - bomb drops.wav -->
+		<PART>
              11 31 000000 0026C3
              11 31 0026C4 006EBB
              11 31 006EBC 010829
@@ -53,9 +72,9 @@
 	     00 00 000000 000000
              11 31 027A1C 02C889
         </PART>
-    </rom>
-    <rom index="4">
-        <PART>
+		</rom>
+	<rom index="4">
+		<PART>
 F6FF0900F6FF0A00F5FF0A00F5FF0800F9FF0600FAFF01000000FEFF0500F7FF
 0D00EFFF1600E5FF2100D8FF2C00CDFF3A00C7FF15002B0108122900AEFBF0FE
 D3022F156E0DC20D4CFDB40302039907C607CB292E20BBFF0827C8259313890F
@@ -5758,5 +5777,11 @@ A0FF79FFAAFF96FFB8FFB2FFC4FFC7FFD0FFD7FFDDFFE3FFE9FFF0FFF2FFF9FF
 FBFFFFFF02000500070009000B000C000F000F000F0011001200120012001100
 12001400130011001300
         </PART>
-    </rom>
+		</rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
 </misterromdescription>

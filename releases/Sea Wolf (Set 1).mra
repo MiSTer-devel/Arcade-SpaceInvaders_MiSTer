@@ -1,28 +1,49 @@
 <misterromdescription>
-	<name>Sea Wolf (set 1)</name>
-	<mameversion>0226</mameversion>
-	<setname>seawolf</setname>
-	<mratimestamp>20201030010603</mratimestamp>
+	<name>Sea Wolf</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version>Set 1</version>
+	<alternative></alternative>
+	<platform></platform>
+	<series>Sea Wolf</series>
 	<year>1976</year>
-	<manufacturer>Dave Nutting Associates / Midway</manufacturer>
-	<category>Army / Submarine</category>
+	<manufacturer>Dave Nutting Associates</manufacturer>
+	<manufacturer>Midway</manufacturer>
+	<category>Shooter - Gallery</category>
+
+	<setname>seawolf</setname>
+	<parent>seawolf</parent>
+	<mameversion>0226</mameversion>
 	<rbf>spaceinvaders</rbf>
-	<mameinfo parent="0" cpp="mw8080bw" input="seawolf"/>
-	<display type="raster" rotate="0"/>
-	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
-	<rom index="0" zip="seawolf.zip" md5="none">
-		<part crc="8f597323" name="sw0041.h"/>
-		<part crc="db980974" name="sw0042.g"/>
-		<part crc="e6ffa008" name="sw0043.f"/>
-		<part crc="c3557d6a" name="sw0044.e"/>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>1</players>
+	<joystick></joystick>
+	<special_controls>positional</special_controls>
+	<num_buttons>1</num_buttons>
+	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+
+	<switches></switches>
+
+	<rom index="1">
+		<part>21</part>
+		</rom>
+	<rom index="0" md5="none" zip="seawolf.zip">
+		<part crc="8f597323" name="sw0041.h"></part>
+		<part crc="db980974" name="sw0042.g"></part>
+		<part crc="e6ffa008" name="sw0043.f"></part>
+		<part crc="c3557d6a" name="sw0044.e"></part>
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-	</rom>
-	<rom index="1">
-		<part>21</part>
-	</rom>
+		</rom>
+	<rom index="2"></rom>
 	<rom index="3">
 		<!-- 0-shiphit.wav -->
 		<!-- 1-torpedo.wav -->
@@ -30,13 +51,13 @@
 		<!-- 3-sonar.wav -->
 		<!-- 4-minehit.wav -->
 		<part>
-0231000000007E57
-0231007E5800EA04
-023100EA0800FE74
-023000FE780149A4
-02310149A801854B
-		</part>
-	</rom>
+		0231000000007E57
+		0231007E5800EA04
+		023100EA0800FE74
+		023000FE780149A4
+		02310149A801854B
+				</part>
+		</rom>
 	<rom index="4">
 		<part>
 7F7F7F7F807F7F7F7F7F7F7F7F7F8080808080807F808080807F80807F807F7F
@@ -3155,5 +3176,11 @@ D2DAD9D2D2D1C4A8A2A5A4A190868E84818E8686898990908D8F8E9191949F9F
 8486848F8E8A8A786B7272797E7C776A686C6E6D676769646165707476767374
 78777D76768787888D887E81
 		</part>
-	</rom>
+		</rom>
+
+	<nvram></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
 </misterromdescription>
