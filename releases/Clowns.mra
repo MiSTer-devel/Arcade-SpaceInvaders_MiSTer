@@ -1,29 +1,50 @@
 <misterromdescription>
-	<name>Clowns (rev. 2)</name>
-	<mameversion>0226</mameversion>
-	<setname>clowns</setname>
-	<mratimestamp>20201030010603</mratimestamp>
+	<name>Clowns</name>
+	<region></region>
+	<homebrew>no</homebrew>
+	<bootleg>no</bootleg>
+	<version></version>
+	<alternative></alternative>
+	<platform></platform>
+	<series></series>
 	<year>1978</year>
 	<manufacturer>Midway</manufacturer>
-	<category>Platform / Circus</category>
+	<category>Ball and Paddle</category>
+
+	<setname>clowns</setname>
+	<parent>clowns</parent>
+	<mameversion>0218</mameversion>
 	<rbf>spaceinvaders</rbf>
-	<mameinfo parent="0" cpp="mw8080bw" input="clowns"/>
-	<display type="raster" rotate="0"/>
+	<about></about>
+
+	<resolution>15kHz</resolution>
+	<rotation>horizontal</rotation>
+	<flip></flip>
+
+	<players>2 (alternating)</players>
+	<joystick></joystick>
+	<special_controls>positional</special_controls>
+	<num_buttons>0</num_buttons>
+	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+
 	<switches default="00,00,00">
-		<dip bits="18,19" name="Bonus game"   ids="None,9000,11000,13000"/>
-		<dip bits="20"    name="Ballon reset" ids="Each Row,All Rows"/>
-		<dip bits="21"    name="Bonus life"   ids="3000,4000"/>
-		<dip bits="22"    name="Lives"	ids="3,4"/>
-		<dip bits="23"    name="Test mode"    ids="Off,On"/>
-	</switches>
-	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
-	<rom index="0" zip="clowns.zip" md5="none">
-		<part crc="ff4432eb" name="h2.cpu"/>
-		<part crc="676c934b" name="g2.cpu"/>
-		<part crc="00757962" name="f2.cpu"/>
-		<part crc="9e506a36" name="e2.cpu"/>
-		<part crc="d61b5b47" name="d2.cpu"/>
-		<part crc="154d129a" name="c2.cpu"/>
+		<dip bits="18,19" ids="None,9000,11000,13000" name="Bonus game"></dip>
+		<dip bits="20" ids="Each Row,All Rows" name="Ballon reset"></dip>
+		<dip bits="21" ids="3000,4000" name="Bonus life"></dip>
+		<dip bits="22" ids="3,4" name="Lives"></dip>
+		<dip bits="23" ids="Off,On" name="Test mode"></dip>
+		</switches>
+
+	<rom index="1">
+		<part>13</part>
+		</rom>
+	<rom index="0" md5="none" zip="clowns.zip">
+		<part crc="ff4432eb" name="h2.cpu"></part>
+		<part crc="676c934b" name="g2.cpu"></part>
+		<part crc="00757962" name="f2.cpu"></part>
+		<part crc="9e506a36" name="e2.cpu"></part>
+		<part crc="d61b5b47" name="d2.cpu"></part>
+		<part crc="154d129a" name="c2.cpu"></part>
 		<part repeat="2048">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
@@ -159,10 +180,8 @@
 07070707070707070707070707070707
 07070707070707070707070707070707
 		</part>
-	</rom>
-	<rom index="1">
-		<part>13</part>
-	</rom>
+		</rom>
+	<rom index="2"></rom>
 	<rom index="3">
 		<!-- 1-bottom.wav -->
 		<!-- 2-middle.wav -->
@@ -2572,12 +2591,18 @@ E900AA0011002300070120027D031B04BB04D8047804130428034402E400E3FF
 1C02FE01B801CC01D6019B0158010D01B40053001C000D000C00130013001700
 25002E0025002E00
 		</part>
-	</rom>
+		</rom>
+
 	<rom index="3" md5="none">
 		<part>
 		00 00 20 15 00 02 00 00
 		00 00 3E A0 01 40 00 66
 		</part>
 	</rom>
-	<nvram index="5" size="322"/>
+
+	<nvram index="5" size="322"></nvram>
+
+	<remark></remark>
+
+	<mratimestamp>20210430005030</mratimestamp>
 </misterromdescription>
