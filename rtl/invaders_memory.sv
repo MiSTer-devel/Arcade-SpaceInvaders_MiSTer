@@ -9,7 +9,7 @@ module invaders_memory(
 	input     [7:0]  Ram_in,
 	output    [7:0]  Rom_out,
 	output    [7:0]  color_prom_out,
-	input     [12:0] color_prom_addr,
+	input     [10:0] color_prom_addr,
 	input     [15:0] dn_addr,
 	input     [7:0]  dn_data,
 	input            dn_wr,

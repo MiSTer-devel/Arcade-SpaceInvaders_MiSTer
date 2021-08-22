@@ -254,7 +254,7 @@ begin
 											wave_left <= (not wave_data(23)) & wave_data(22 downto 16) & x"00";
 											wave_right <= (not wave_data(31)) & wave_data(30 downto 24) & x"00";
 											
-										when "11" => -- 16 bit stereo
+										when "11" => -- 16 bit stereo (will only play 16 bit mono as SDRAM not reading 32 bit currently)
 											wave_left <= wave_data(31 downto 16);											
 											wave_right <= wave_data(15 downto 0);											
 											
