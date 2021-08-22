@@ -20,7 +20,7 @@
 //============================================================================
 
 // Enable overlay (or not)
-`define USE_OVERLAY
+//`define USE_OVERLAY
 
 module emu
 (
@@ -57,15 +57,16 @@ module emu
 
 	input  [11:0] HDMI_WIDTH,
 	input  [11:0] HDMI_HEIGHT,
+	output        HDMI_FREEZE,
 
-`ifdef USE_FB
-	// Use framebuffer from DDRAM (USE_FB=1 in qsf)
+`ifdef MISTER_FB
+	// Use framebuffer in DDRAM (USE_FB=1 in qsf)
 	// FB_FORMAT:
 	//    [2:0] : 011=8bpp(palette) 100=16bpp 101=24bpp 110=32bpp
 	//    [3]   : 0=16bits 565 1=16bits 1555
 	//    [4]   : 0=RGB  1=BGR (for 16/24/32 modes)
 	//
-	// FB_STRIDE either 0 (rounded to 256 bytes) or multiple of 16 bytes.
+	// FB_STRIDE either 0 (rounded to 256 bytes) or multiple of pixel size (in bytes)
 	output        FB_EN,
 	output  [4:0] FB_FORMAT,
 	output [11:0] FB_WIDTH,
@@ -76,6 +77,7 @@ module emu
 	input         FB_LL,
 	output        FB_FORCE_BLANK,
 
+`ifdef MISTER_FB_PALETTE
 	// Palette control for 8bit modes.
 	// Ignored for other video modes.
 	output        FB_PAL_CLK,
@@ -83,6 +85,7 @@ module emu
 	output [23:0] FB_PAL_DOUT,
 	input  [23:0] FB_PAL_DIN,
 	output        FB_PAL_WR,
+`endif
 `endif
 
 	output        LED_USER,  // 1 - ON, 0 - OFF.
@@ -98,6 +101,16 @@ module emu
 	output [15:0] AUDIO_R,
 	output        AUDIO_S,   // 1 - signed audio samples, 0 - unsigned
 	output  [1:0] AUDIO_MIX, // 0 - no mix, 1 - 25%, 2 - 50%, 3 - 100% (mono)
+
+	//ADC
+	inout   [3:0] ADC_BUS,
+
+	//SD-SPI
+	output        SD_SCK,
+	output        SD_MOSI,
+	input         SD_MISO,
+	output        SD_CS,
+	input         SD_CD,
 
 	// I/O board button press simulation (active high)
 	// b[1]: user button
@@ -133,6 +146,13 @@ module emu
 	output        SDRAM_nWE,
 `endif
 
+	input         UART_CTS,
+	output        UART_RTS,
+	input         UART_RXD,
+	output        UART_TXD,
+	output        UART_DTR,
+	input         UART_DSR,
+
 	// Open-drain User port.
 	// 0 - D+/RX
 	// 1 - D-/TX
@@ -144,24 +164,29 @@ module emu
 	input         OSD_STATUS
 );
 
-assign VGA_F1    = 0;
-assign VGA_SCALER= 0;
+assign VGA_F1         = 0;
+assign VGA_SCALER     = 0;
+assign HDMI_FREEZE    = 0;
+assign USER_OUT       = 1;
+assign LED_USER       = ioctl_download;
+assign LED_DISK       = 0;
+assign LED_POWER      = 0;
+assign BUTTONS        = 0;
+assign AUDIO_MIX      = 0;
+assign {UART_RTS, UART_TXD, UART_DTR} = 0;
+assign {SD_SCK, SD_MOSI, SD_CS} = 'Z;
 
-assign USER_OUT  = '1;
-assign {FB_PAL_CLK, FB_FORCE_BLANK, FB_PAL_ADDR, FB_PAL_DOUT, FB_PAL_WR} = '0;
-
-assign LED_USER  = ioctl_download;
-assign LED_DISK  = 0;
-assign LED_POWER = 0;
-assign BUTTONS = 0;
-
-assign AUDIO_MIX = 0;
+`ifdef MISTER_FB
+	assign FB_FORCE_BLANK = 0;
+`ifdef MISTER_FB_PALETTE
+	assign {FB_PAL_CLK, FB_PAL_ADDR, FB_PAL_DOUT, FB_PAL_WR} = '0;
+`endif
+`endif
 
 wire [1:0] ar = status[26:25];
 
 assign VIDEO_ARX = (!ar) ? ((status[2] | landscape) ? 8'd4 : 8'd3) : (ar - 1'd1);
 assign VIDEO_ARY = (!ar) ? ((status[2] | landscape) ? 8'd3 : 8'd4) : 12'd0;
-
 
 `include "build_id.v" 
 localparam CONF_STR = {
@@ -238,12 +263,10 @@ wire [21:0] gamma_bus;
 
 wire [15:0] sdram_sz;
 
-hps_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
+hps_io #(.CONF_STR(CONF_STR)) hps_io
 (
 	.clk_sys(clk_sys),
 	.HPS_BUS(HPS_BUS),
-
-	.conf_str(CONF_STR),
 
 	.buttons(buttons),
 	.status(status),
@@ -1455,7 +1478,7 @@ always @(*) begin
       endcase
 end
 
-wire [15:0] color_prom_addr;
+wire [10:0] color_prom_addr;
 wire [7:0]  color_prom_out;
 wire [15:0]RAB;
 wire [15:0]AD;
@@ -1542,7 +1565,7 @@ invaderst invaderst(
 		.ShiftReverse(ShiftReverse),
 
 		.mod_vortex(mod==mod_vortex),
-		.Vortex_Col(Vortex_Col),
+		.Vortex_Col(Vortex_Col)
 
    );
 		  
@@ -1705,45 +1728,39 @@ virtualgun virtualgun
 
 ////////////////////////////  Samples   ///////////////////////////////////
 
-wire 			wav_load = ioctl_download && (ioctl_index == 4);
 reg  [27:0] wav_addr;
-wire [31:0] wav_data;
+wire [15:0] wav_data;
 wire        wav_want_byte;
-wire 			wav_data_ready;
 wire [15:0] samples_left;
 wire [15:0] samples_right;
-reg   [7:0] ioctl_low;
-
-// 16 bit write, 32 bit read 
-always @(posedge clk_sys) 
-begin
-	if(wav_load & ~ioctl_addr[0]) ioctl_low <= ioctl_dout;
-end
 
 	sdram sdram
 	(
 		.*,
-
 		.init(~pll_locked),
 		.clk(clk_mem),
-		.ch1_addr(wav_load ? ioctl_addr[24:1] : wav_addr[24:1]),
-		.ch1_dout(wav_data),
-		.ch1_din({ioctl_dout, ioctl_low}),
-		.ch1_req(wav_load ? (ioctl_wr & ioctl_addr[0]) : wav_want_byte),
-		.ch1_rnw(~wav_load)
-	);
 
+		.addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
+		.we(ioctl_download && ioctl_wr && (ioctl_index==4)),
+		.rd(~ioctl_download & wav_want_byte),
+		.din(ioctl_dout),
+		.dout(wav_data),
+
+		.ready()
+	);
+	
+	
 // Link to Samples module
 
 samples samples
 (
 	.audio_enabled(Audio_Output),
-	.audio_port_0(mod_amazingmaze ? MazeTrigger : mod_lupin ? LupinPort :SoundCtrl3),
+	.audio_port_0(mod == mod_amazingmaze ? MazeTrigger : mod == mod_lupin ? LupinPort : SoundCtrl3),	
 	.audio_port_1(SoundCtrl5),
 
 	.wave_addr(wav_addr),        
 	.wave_read(wav_want_byte),   
-	.wave_data(wav_data),        
+	.wave_data({wav_data,wav_data}),
 
 	.samples_ok(use_samples),
 
@@ -1767,13 +1784,13 @@ samples samples
 
 
 // Music for Amazing Maze
+
 reg [7:0] MazeTrigger;
 
 MAZE_MUSIC MAZE_MUSIC
 (
-     .I_JOYSTICK({m_up1 || m_up2,m_down1 || m_down2,m_left1 ||
-m_left2,m_right1 || m_right2}),
-         .I_COIN(m_coin1),
+     .I_JOYSTICK({m_up1 || m_up2,m_down1 || m_down2,m_left1 || m_left2,m_right1 || m_right2}),
+     .I_COIN(m_coin1),
      .O_TRIGGER(MazeTrigger),
      .CLK(clk_sys)
 );
@@ -1797,6 +1814,7 @@ begin
                 LupinPort <= {2'd0,SoundCtrl3[5:0]};
         end;
 end
+
 // Tone Generator
 
 reg [15:0] Tone_Out;
