@@ -36,7 +36,7 @@
 
 	<rom index="1">
 		<part>10</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="beac40af696fe59551f759d46278ea68" zip="ballbomb.zip">
 		<part crc="551585b5" name="tn01"></part>
 		<part crc="7e1f734f" name="tn02"></part>
@@ -50,7 +50,7 @@
 		<part crc="deb0ac82" name="tn07"></part>
 		</rom>
 	<rom index="2"></rom>
-	<rom index="3">
+	<rom index="5">
 		<!-- 3-01 - hit balloon.wav -->
 		<!-- 3-02 - Shot.wav -->
 		<!-- 3-04 - base hit.wav -->
@@ -73,7 +73,7 @@
              11 31 027A1C 02C889
         </PART>
 		</rom>
-	<rom index="4">
+	<rom index="6">
 		<PART>
 F6FF0900F6FF0A00F5FF0A00F5FF0800F9FF0600FAFF01000000FEFF0500F7FF
 0D00EFFF1600E5FF2100D8FF2C00CDFF3A00C7FF15002B0108122900AEFBF0FE

@@ -44,7 +44,7 @@
 		<part repeat="2048">FF</part>
 		</rom>
 	<rom index="2"></rom>
-	<rom index="3">
+	<rom index="5">
 		<!-- 0-shiphit.wav -->
 		<!-- 1-torpedo.wav -->
 		<!-- 2-dive.wav -->
@@ -58,7 +58,7 @@
 		02310149A801854B
 				</part>
 		</rom>
-	<rom index="4">
+	<rom index="6">
 		<part>
 7F7F7F7F807F7F7F7F7F7F7F7F7F8080808080807F808080807F80807F807F7F
 7F7F7F80808080808080808080808080808080808080808080807F7F7F7F7F7F

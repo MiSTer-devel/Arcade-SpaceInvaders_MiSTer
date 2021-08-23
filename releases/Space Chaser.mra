@@ -57,7 +57,7 @@
 		</rom>
 	<rom index="4"></rom>
 
-	<nvram index="5" size="13"></nvram>
+	<nvram index="4" size="13"></nvram>
 
 	<remark></remark>
 

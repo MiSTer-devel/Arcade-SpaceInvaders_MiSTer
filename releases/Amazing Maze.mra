@@ -176,7 +176,7 @@
 		</part>
 		</rom>
 	<rom index="2"></rom>
-	<rom index="3">
+	<rom index="5">
 		<!-- 1-up.wav -->
 		<!-- 2-down.wav -->
 		<!-- 3-left.wav -->
@@ -188,7 +188,7 @@
              12 31 00B804 00F55B
         </PART>
 		</rom>
-	<rom index="4">
+	<rom index="6">
 		<PART>
 0000340059FFD8014CF782C3D2D2EDD35EE79056A651E6406039932DBD28BB1F
 081DDE15C514DA0EF50ED709DF0A3D060C089C03280692011F0589FFFB0597F5

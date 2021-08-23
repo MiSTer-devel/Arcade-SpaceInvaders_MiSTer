@@ -51,7 +51,7 @@
 		<part repeat="2048">00</part>
 		</rom>
 	<rom index="2"></rom>
-	<rom index="3">
+	<rom index="5">
 		<!-- 01-heli.wav -->
 		<!-- 02-warp.wav -->
 		<!-- 03-cap.wav -->
@@ -76,7 +76,7 @@
              14 31 01E3EC 021F23
         </PART>
 		</rom>
-	<rom index="4">
+	<rom index="6">
 		<PART>
 858587878587857F746860544F4C4F546068717C859095A1A9B2B5BDBDC3C4C4
 C4C4C4C4C3C0C0BAB7B2AFA9A6A19B95938D8A85827C79746E6B68656063656B

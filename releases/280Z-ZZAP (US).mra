@@ -37,7 +37,8 @@
 
 	<rom index="1">
 		<part>03</part>
-		</rom>
+	</rom>
+
 	<rom index="0" md5="none" zip="280zzzap.zip">
 		<part crc="1fa86e1c" name="zzzaph"></part>
 		<part crc="9639bc6b" name="zzzapg"></part>
@@ -181,9 +182,6 @@
 02020202020202020202020202020202
 		</part>
 	</rom>
-	<rom index="1">
-		<part>03</part>
-	</rom>	
 	<rom index="2">
 	<part>
 00000000000000000000000000000000
@@ -14748,7 +14746,7 @@ A2674500784C34005132230084543900
 00000000000000000000000001010100
 		</part>	
 		</rom>
-	<rom index="3">
+	<rom index="5">
          <!-- boom.wav -->
          <!-- tyre.wav -->
          <!-- hiss.wav -->
@@ -14767,13 +14765,7 @@ A2674500784C34005132230084543900
              11 32 009568 013083
         </part>
     </rom>
-	<rom index="3" md5="none">
-		<part>
-		 00 00 20 3D 00 02 00 00
-		 00 00 20 29 00 04 00 00
-		</part>
-	</rom>
-	<rom index="4">
+	<rom index="6">
 		<part>
 1E2ADA51D152FD584046E83017160E094D06A90DDC0A04FFEFEEDDE73BED0DFF
 DB0C610C83FC8DE9EFE0A6E23DEC8FFC0D0290F40FD87FBF42B6C8B811C7A6D3
@@ -18105,7 +18097,14 @@ D1086519AB1F
         </part>
 		</rom>
 
-	<nvram index="5" size="6"></nvram>
+	<rom index="3" md5="none">
+		<part>
+		 00 00 20 3D 00 02 00 00
+		 00 00 20 29 00 04 00 00
+		</part>
+	</rom>
+
+	<nvram index="4" size="6"></nvram>
 
 	<remark></remark>
 
