@@ -87,9 +87,7 @@
 		00 00 34 A2 00 01 00 00
 		</part>
 	</rom>
-	<rom index="4"></rom>
-
-	<nvram index="5" size="38"></nvram>
+	<nvram index="4" size="38"></nvram>
 
 	<remark></remark>
 

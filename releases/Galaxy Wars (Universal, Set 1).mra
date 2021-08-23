@@ -56,9 +56,8 @@
 				 00 00 20 05 00 06 00 00
 				</part>
 		</rom>
-	<rom index="4"></rom>
 
-	<nvram index="5" size="6"></nvram>
+	<nvram index="4" size="6"></nvram>
 
 	<remark></remark>
 

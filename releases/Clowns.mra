@@ -182,7 +182,7 @@
 		</part>
 		</rom>
 	<rom index="2"></rom>
-	<rom index="3">
+	<rom index="5">
 		<!-- 1-bottom.wav -->
 		<!-- 2-middle.wav -->
 		<!-- 3-top.wav -->
@@ -197,7 +197,7 @@
 123100D100012AC7
 		</part>
 	</rom>
-	<rom index="4">
+	<rom index="6">
 		<part>
 B80CDD12C210DB11EF10A11111118E11231181112F117A11341174113C117111
 3E116E1142116D1146116B1147116A114B116B114B1170114B11741146117F11
@@ -2600,7 +2600,7 @@ E900AA0011002300070120027D031B04BB04D8047804130428034402E400E3FF
 		</part>
 	</rom>
 
-	<nvram index="5" size="322"></nvram>
+	<nvram index="4" size="322"></nvram>
 
 	<remark></remark>
 

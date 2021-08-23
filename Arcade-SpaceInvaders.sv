@@ -20,7 +20,7 @@
 //============================================================================
 
 // Enable overlay (or not)
-//`define USE_OVERLAY
+//`define DEBUG_MODE
 
 module emu
 (
@@ -202,9 +202,11 @@ localparam CONF_STR = {
 	"DIP;",
 	"-;",
 	"O8,Overlay,On,Off;",
+`ifdef DEBUG_MODE
 	"O9,Overlay Test,Off,On;",
+`endif
 	"OA,Background Graphic,On,Off;",
-`ifdef USE_OVERLAY
+`ifdef DEBUG_MODE
 	"OB,Debug display,Off,On;",
 `endif
 	"-;",
@@ -383,7 +385,7 @@ end
 
 wire fg;
 
-`ifdef USE_OVERLAY
+`ifdef DEBUG_MODE
 	// mix in overlay!
 	wire og = |{C_R};
 	wire [7:0]rr = (Force_Red)? {8{r||g||b}} | {C_R,C_R} : {8{r}} | {C_R,C_R};
@@ -1550,7 +1552,12 @@ invaderst invaderst(
 		.VShift(status[23:20]),
 		
 		.Overlay(~status[8]),
+
+`ifdef DEBUG_MODE
 		.OverlayTest(status[9]),
+`else
+		.OverlayTest(1'd0),
+`endif
 
 		.Trigger_ShiftCount(Trigger_ShiftCount),
 		.Trigger_ShiftData(Trigger_ShiftData),
@@ -1741,7 +1748,7 @@ wire [15:0] samples_right;
 		.clk(clk_mem),
 
 		.addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
-		.we(ioctl_download && ioctl_wr && (ioctl_index==4)),
+		.we(ioctl_download && ioctl_wr && (ioctl_index == 6)),
 		.rd(~ioctl_download & wav_want_byte),
 		.din(ioctl_dout),
 		.dout(wav_data),
@@ -1767,13 +1774,13 @@ samples samples
 	.dl_addr(ioctl_addr),
 	.dl_wr(ioctl_wr),
 	.dl_data(ioctl_dout),
-	.dl_download(ioctl_download && (ioctl_index == 3)),
+	.dl_download(ioctl_download && (ioctl_index == 5)),
 	
 	.CLK_SYS(clk_sys),
 	.clock(clk_mem),
 	.reset(reset_mem),
 	
-`ifdef USE_OVERLAY
+`ifdef DEBUG_MODE
 	.Hex1(Line1),
 `endif
 	
@@ -1910,7 +1917,6 @@ wire hs_access;
 
 hiscore #(
 	.HS_ADDRESSWIDTH(16),
-	.HS_DUMPINDEX(5),
 	.CFG_ADDRESSWIDTH(6),
 	.CFG_LENGTHWIDTH(2),
 	.DELAY_CHECKWAIT(4'b1111),

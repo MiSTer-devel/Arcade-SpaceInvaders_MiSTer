@@ -179,15 +179,15 @@
 		</part>
 	</rom>
 	<rom index="2"></rom>
+	<rom index="4"></rom>
 	<rom index="3" md5="none">
 		<part>
 				 00 00 20 80 00 60 00 24
 				 00 00 20 47 00 02 00 00
-				</part>
-		</rom>
-	<rom index="4"></rom>
+		</part>
+	</rom>
 
-	<nvram index="5" size="98"></nvram>
+	<nvram index="4" size="98"></nvram>
 
 	<remark></remark>
 

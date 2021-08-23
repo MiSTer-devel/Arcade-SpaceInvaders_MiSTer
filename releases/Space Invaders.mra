@@ -185,7 +185,7 @@
 		</rom>
 	<rom index="4"></rom>
 
-	<nvram index="5" size="2"></nvram>
+	<nvram index="4" size="2"></nvram>
 
 	<remark></remark>
 
