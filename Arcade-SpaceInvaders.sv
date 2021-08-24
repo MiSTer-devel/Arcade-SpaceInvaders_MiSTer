@@ -1852,7 +1852,7 @@ BALLOON_MUSIC BALLOON_MUSIC
 
 // Overlay!
 
-`ifdef USE_OVERLAY
+`ifdef DEBUG_MODE
 
 reg [3:0] C_R,C_G,C_B;
 reg [159:0] Line1,Line2;
