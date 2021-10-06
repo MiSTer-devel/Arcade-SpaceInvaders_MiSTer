@@ -1765,27 +1765,38 @@ virtualgun virtualgun
 ////////////////////////////  Samples   ///////////////////////////////////
 
 reg  [27:0] wav_addr;
-wire [15:0] wav_data;
+wire [15:0] wav_data_o;
 wire        wav_want_byte;
 wire [15:0] samples_left;
 wire [15:0] samples_right;
 
-	sdram sdram
-	(
-		.*,
-		.init(~pll_locked),
-		.clk(clk_mem),
+reg  Ready_L;
+wire Ready;
+reg  [15:0] wav_data;
 
-		.addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
-		.we(ioctl_download && ioctl_wr && (ioctl_index == 6)),
-		.rd(~ioctl_download & wav_want_byte),
-		.din(ioctl_dout),
-		.dout(wav_data),
+        sdram sdram
+        (
+                .*,
+                .init(~pll_locked),
+                .clk(clk_mem),
 
-		.ready()
-	);
-	
-	
+                .addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
+                .we(ioctl_download && ioctl_wr && (ioctl_index == 6)),
+                .rd(~ioctl_download & wav_want_byte),
+                .din(ioctl_dout),
+                .dout(wav_data_o),
+
+                .ready(Ready)
+        );
+
+
+always @(posedge clk_mem)
+begin
+         Ready_L <= Ready;
+         // on Ready set keep data
+         if(Ready && ~Ready_L) wav_data <= ~wav_data_o;
+end
+
 // Link to Samples module
 
 samples samples
