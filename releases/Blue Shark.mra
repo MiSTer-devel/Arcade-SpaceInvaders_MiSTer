@@ -25,12 +25,12 @@
 	<joystick></joystick>
 	<special_controls>positional</special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,80">
 		<dip bits="21,22" ids="None,14k,18k,22k" name="Replay"></dip>
 		<dip bits="23" ids="Off,On" name="Service" values="1,0"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>04</part>
@@ -19907,7 +19907,14 @@ BF06B6074C06720313021604FD06C008F2080809C209B90A270B2A0B1A0B490B
         </part>
     </rom>
 
-	<nvram index="4" size="6"></nvram>
+	<rom index="3" md5="none">
+		<part>
+		00 01 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 20 0A 00 05 00 00
+		</part>
+	</rom>
+
+	<nvram index="4" size="5"></nvram>
 
 	<remark></remark>
 

@@ -25,18 +25,18 @@
 	<joystick>2-way vertical</joystick>
 	<special_controls>spinner</special_controls>
 	<num_buttons>0</num_buttons>
-	<buttons default="A,R" names="Gear,-,-,-,-,-,Coin"></buttons>
+	<buttons default="A,R,L" names="Gear,-,-,-,-,-,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="16,17" ids="1C_1C,2C_1C,1C_2C,2C_3C" name="Coinage"></dip>
 		<dip bits="18,19" ids="45+22,60+30,75+37,90+45" name="Game Time" values="3,0,2,1"></dip>
 		<dip bits="20,21" ids="350,400,450,500" name="Extended Time At"></dip>
 		<dip bits="22,23" ids="Off,Ram/Rom,Input,No Extended Time" name="Test/Extended"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>20</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="lagunar.zip">
 		<part crc="0cd5a280" name="lagunar.h"></part>
 		<part crc="824cd6f5" name="lagunar.g"></part>
@@ -48,7 +48,7 @@
 		<part repeat="2048">00</part>
 		<part repeat="1024">FF</part>
 		<part repeat="1024">FF</part>
-		</rom>
+	</rom>
 	<rom index="2">
 		<part>
 C0D24800BED14600BFD14700BED04600
@@ -14632,13 +14632,6 @@ AAB14600A3AA4200929A2F007C862300
              11 32 009568 013083
         </PART>
     </rom>
-	<rom index="3" md5="none">
-		<part>
-				 00 00 20 11 00 09 00 00
-				 00 00 20 05 00 03 00 00
-				 00 00 20 31 00 01 89 89
-				</part>
-		</rom>
 	<rom index="6">
 		<PART>
 1E2ADA51D152FD584046E83017160E094D06A90DDC0A04FFEFEEDDE73BED0DFF
@@ -17968,9 +17961,17 @@ F7F828F78305C514D5158613EB16961351042FF8ADF770064118541D8B12C403
 70F0B1E40CE46CEB28FC091155202B2215172A112B11AF0EC006E0FF14F6FDF0
 D1F93A0335094C1030185C1F1C1EDD183B10940333F827F5FDF714FD97FF1D04
 D1086519AB1F
-        </PART>
-		</rom>
+		</PART>
+	</rom>
 
+	<rom index="3" md5="none">
+		<part>
+		00 10 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 20 11 00 09 00 00
+		00 00 20 05 00 03 00 00
+		00 00 20 31 00 01 89 89
+		</part>
+	</rom>
 	<nvram index="4" size="13"></nvram>
 
 	<remark></remark>

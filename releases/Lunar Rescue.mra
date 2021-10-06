@@ -25,13 +25,13 @@
 	<joystick>2-way horizontal</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches></switches>
 
 	<rom index="1">
 		<part>06</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="lrescue.zip">
 		<part crc="2bbc4778" name="lrescue.1"></part>
 		<part crc="49e79706" name="lrescue.2"></part>
@@ -42,15 +42,16 @@
 		<part repeat="4096">00</part>
 		<part crc="8b2e38de" name="7643-1.cpu"></part>
 		<part crc="8b2e38de" name="7643-1.cpu"></part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3" md5="none">
 		<part>
-				 00 00 20 DB 00 01 0A 0A
-				 00 00 20 CF 00 0A 1B 1B
-				 00 00 20 F4 00 02 00 05
-				</part>
-		</rom>
+		00 1F 90 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 20 DB 00 01 0A 0A
+		00 00 20 CF 00 0A 1B 1B
+		00 00 20 F4 00 02 00 05
+		</part>
+	</rom>
 	<rom index="4"></rom>
 
 	<nvram index="4" size="13"></nvram>

@@ -26,15 +26,15 @@
 	<joystick>8-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>0</num_buttons>
-	<buttons default="A,X,Y,Start,Select,R" names="Fire,GunUp,GunDown,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,X,Y,Start,Select,R,L" names="Fire,GunUp,GunDown,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="20,21" ids="60,70,80,90" name="Game Time"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>19</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="gunfight.zip">
 		<part crc="0b117d73" name="7609h.bin"></part>
 		<part crc="57bc3159" name="7609g.bin"></part>
@@ -178,7 +178,7 @@
 05050505050505050505050505050505
 05050505050505050505050505050505
 		</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3"></rom>
 	<rom index="4"></rom>

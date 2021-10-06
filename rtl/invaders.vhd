@@ -105,6 +105,8 @@ entity invaderst is
 		VShift		    : in  std_logic_vector(3 downto 0);
 		HShift		    : in  std_logic_vector(3 downto 0);
 
+		pause           : in std_logic;
+
 		-- PortWR triggers
 		Trigger_ShiftCount    : in std_logic;
 		Trigger_ShiftData     : in std_logic;
@@ -172,7 +174,8 @@ architecture rtl of invaderst is
 		HShift		    : in  std_logic_vector(3 downto 0);
 
 	   mod_vortex      : in std_logic;
-		Vortex_Col      : in std_logic
+		Vortex_Col      : in std_logic;
+		pause           : in std_logic
 	);
 	end component;
 
@@ -271,7 +274,8 @@ begin
 		   VShift => VShift,
 		   HShift => HShift,
 			mod_vortex => mod_vortex,
-			Vortex_Col => Vortex_Col
+			Vortex_Col => Vortex_Col,
+			pause => pause
 		);
 
 

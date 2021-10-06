@@ -26,13 +26,13 @@
 	<joystick></joystick>
 	<special_controls>positional</special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches></switches>
 
 	<rom index="1">
 		<part>21</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="seawolf.zip">
 		<part crc="8f597323" name="sw0041.h"></part>
 		<part crc="db980974" name="sw0042.g"></part>
@@ -42,7 +42,7 @@
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="5">
 		<!-- 0-shiphit.wav -->
@@ -57,7 +57,7 @@
 		023000FE780149A4
 		02310149A801854B
 				</part>
-		</rom>
+	</rom>
 	<rom index="6">
 		<part>
 7F7F7F7F807F7F7F7F7F7F7F7F7F8080808080807F808080807F80807F807F7F
@@ -3176,9 +3176,17 @@ D2DAD9D2D2D1C4A8A2A5A4A190868E84818E8686898990908D8F8E9191949F9F
 8486848F8E8A8A786B7272797E7C776A686C6E6D676769646165707476767374
 78777D76768787888D887E81
 		</part>
-		</rom>
+	</rom>
 
-	<nvram></nvram>
+	<rom index="3" md5="none">
+		<part>
+		00 10 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 20 06 00 01 00 00
+		00 00 20 01 00 01 09 09
+		</part>
+	</rom>
+
+	<nvram index="4" size="2"></nvram>
 
 	<remark></remark>
 

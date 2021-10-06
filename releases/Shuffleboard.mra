@@ -25,13 +25,13 @@
 	<joystick></joystick>
 	<special_controls>trackball</special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches></switches>
 
 	<rom index="1">
 		<part>01</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="shuffle.zip">
 		<part crc="0d422a18" name="shuffle.h"></part>
 		<part crc="7db7fcf9" name="shuffle.g"></part>
@@ -40,7 +40,7 @@
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3"></rom>
 	<rom index="4"></rom>

@@ -25,13 +25,13 @@
 	<joystick>4-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches></switches>
 
 	<rom index="1">
 		<part>23</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="schaser.zip">
 		<part crc="0dfbde68" name="rt13.bin"></part>
 		<part crc="5a508a25" name="rt14.bin"></part>
@@ -47,14 +47,15 @@
 		<part repeat="4096">00</part>
 		<part crc="950cf973" name="rt06.ic2"></part>
 		<part crc="950cf973" name="rt06.ic2"></part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3" md5="none">
 		<part>
-				 00 00 22 44 00 0A 1B 1B
-				 00 00 23 3F 00 03 01 00
-				</part>
-		</rom>
+		00 10 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 22 44 00 0A 1B 1B
+		00 00 23 3F 00 03 01 00
+		</part>
+	</rom>
 	<rom index="4"></rom>
 
 	<nvram index="4" size="13"></nvram>

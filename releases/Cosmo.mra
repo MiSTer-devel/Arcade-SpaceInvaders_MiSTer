@@ -25,15 +25,15 @@
 	<joystick>2-way horizontal</joystick>
 	<special_controls></special_controls>
 	<num_buttons>2</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="16" ids="3,5" name="Lives"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>14</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="cosmo.zip">
 		<part crc="445c9a98" name="1.36"></part>
 		<part crc="df3eb731" name="2.35"></part>
@@ -45,10 +45,11 @@
 		<part repeat="2048">00</part>
 		<part crc="bd8576f1" name="n-1.7d"></part>
 		<part crc="48f1ade5" name="n-2.6e"></part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3" md5="none">
 		<part>
+		00 20 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
 		00 00 20 38 00 03 00 00
 		00 00 2E 22 00 01 7C 7C
 		00 00 2E 42 00 01 82 82

@@ -25,7 +25,7 @@
 	<joystick>4-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="16,17" ids="3,4,5,6" name="Lives"></dip>
@@ -33,11 +33,11 @@
 		<dip bits="19" ids="8,2" name="Bags to Collect"></dip>
 		<dip bits="20" ids="English, Japanese" name="Language"></dip>
 		<dip bits="23" ids="Off,On" name="Invuln  (cheat)"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>1B</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="lupin3.zip|lupin3a.zip">
 		<!-- 8k -->
 		<part crc="68a7f47a" name="lp12.bin"></part>
@@ -49,7 +49,7 @@
 		<part crc="66289ab2" name="lp17.bin"></part>
 		<part crc="2f07b4ba" name="lp18.bin"></part>
 		<part repeat="2048">00</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="5">
 		<!-- 01-heli.wav -->
@@ -75,7 +75,7 @@
              00 00 000000 000000
              14 31 01E3EC 021F23
         </PART>
-		</rom>
+	</rom>
 	<rom index="6">
 		<PART>
 858587878587857F746860544F4C4F546068717C859095A1A9B2B5BDBDC3C4C4
@@ -4424,8 +4424,8 @@ F6073A0878083808F1078507A506E105A004A7039A02BD015001FB001A00BFFF
 DC023E03AB03B6039C035D034603EA02C7021602E6014F01F3007B0077FF70FE
 B4FD56FD02FDBDFC17FD9EFDD0FD91FEA1FEE8FE1BFF35FF51FF88FF16FF2EFF
 BBFE4CFE
-        </PART>
-		</rom>
+		</PART>
+	</rom>
 
 	<nvram></nvram>
 

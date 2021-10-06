@@ -101,7 +101,8 @@ entity mw8080 is
 		VShift		    : in  std_logic_vector(3 downto 0);
 		HShift		    : in  std_logic_vector(3 downto 0);
 	   mod_vortex      : in std_logic;
-		Vortex_Col      : in std_logic
+		Vortex_Col      : in std_logic;
+		Pause           : in std_logic
 	);
 
 end mw8080;
@@ -164,7 +165,7 @@ architecture struct of mw8080 is
 begin
 	ENA <= ClkEnCnt(2);
 	Status <= Status_i;
-	Ready <= Ready_i;
+	Ready <= Ready_i and not Pause;
 	DB <= DO;
 	Systb <= Sync;
 	Int <= Int_i;
@@ -208,7 +209,7 @@ begin
 			RESET_n => Rst_n,
 			CLK => Clk,
 			CLKEN => ClkEnCnt(2),
-			READY => Ready_i,
+			READY => Ready_i and not Pause,
 			HOLD => Hold,
 			INT => Int_i,
 			INTE => IntE_i,

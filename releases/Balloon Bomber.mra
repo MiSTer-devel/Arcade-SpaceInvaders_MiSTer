@@ -25,14 +25,14 @@
 	<joystick>2-way horizontal</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00,00">
 		<dip bits="16,17" ids="3,4,5,6" name="Lives"></dip>
 		<dip bits="18" ids="Off,On" name="Tilt"></dip>
 		<dip bits="19" ids="1500,1000" name="Bonus Life"></dip>
 		<dip bits="24" ids="Upright,Cocktail" name="Cabinet"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>10</part>
@@ -48,7 +48,7 @@
 		<part repeat="2048">00</part>
 		<part crc="7ec554c4" name="tn06"></part>
 		<part crc="deb0ac82" name="tn07"></part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="5">
 		<!-- 3-01 - hit balloon.wav -->
@@ -5777,8 +5777,8 @@ A0FF79FFAAFF96FFB8FFB2FFC4FFC7FFD0FFD7FFDDFFE3FFE9FFF0FFF2FFF9FF
 FBFFFFFF02000500070009000B000C000F000F000F0011001200120012001100
 12001400130011001300
         </PART>
-		</rom>
-
+	</rom>
+	
 	<nvram></nvram>
 
 	<remark></remark>
