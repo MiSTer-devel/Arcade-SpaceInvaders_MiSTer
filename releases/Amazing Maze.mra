@@ -25,17 +25,17 @@
 	<joystick>8-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>0</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00">
 		<dip bits="5,6" ids="1C_1C,2C_1C,1C_2C,2C_3C" name="Coinage"></dip>
 		<dip bits="7" ids="4,6" name="2P Game Time"></dip>
 		<dip bits="8" ids="Off,On" name="Service"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>0E</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="maze.zip">
 		<part crc="f2860cff" name="maze.h"></part>
 		<part crc="65fad839" name="maze.g"></part>
@@ -187,7 +187,7 @@
              12 31 007AE0 00B803
              12 31 00B804 00F55B
         </PART>
-		</rom>
+	</rom>
 	<rom index="6">
 		<PART>
 0000340059FFD8014CF782C3D2D2EDD35EE79056A651E6406039932DBD28BB1F
@@ -2154,7 +2154,7 @@ BBEC65F20CF222F7A0F5C5FAB2F74DFEA2F67D27F13567277024891C86195E14
 FEFF0200FFFF0100FDFF0200FEFF0300FEFF0300FFFF0200FFFF0200FEFF0200
 FEFF0100FFFF0000FEFF000000000100FFFF0000FFFF0000FFFF0000
         </PART>
-		</rom>
+	</rom>
 
 	<nvram></nvram>
 

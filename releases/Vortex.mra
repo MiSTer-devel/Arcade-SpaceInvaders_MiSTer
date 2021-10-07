@@ -25,16 +25,16 @@
 	<joystick>2-way horizontal</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire - Hold Thurst,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire - Hold Thrust,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,80">
 		<dip bits="0,1" ids="2,3,4,5" name="Ships"></dip>
 		<dip bits="23" ids="2C_1C,1C_1C" name="Coinage"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>02</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="vortex.zip">
 		<part crc="577417a6" name="1.t36"></part>
 		<part crc="126d0049" name="2.t35"></part>
@@ -44,7 +44,7 @@
 		<part crc="271085d0" name="6.t31"></part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3"></rom>
 	<rom index="4"></rom>

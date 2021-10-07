@@ -25,7 +25,7 @@
 	<joystick></joystick>
 	<special_controls>positional</special_controls>
 	<num_buttons>0</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="18,19" ids="None,9000,11000,13000" name="Bonus game"></dip>
@@ -33,11 +33,11 @@
 		<dip bits="21" ids="3000,4000" name="Bonus life"></dip>
 		<dip bits="22" ids="3,4" name="Lives"></dip>
 		<dip bits="23" ids="Off,On" name="Test mode"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>13</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="clowns.zip">
 		<part crc="ff4432eb" name="h2.cpu"></part>
 		<part crc="676c934b" name="g2.cpu"></part>
@@ -2591,16 +2591,9 @@ E900AA0011002300070120027D031B04BB04D8047804130428034402E400E3FF
 1C02FE01B801CC01D6019B0158010D01B40053001C000D000C00130013001700
 25002E0025002E00
 		</part>
-		</rom>
-
-	<rom index="3" md5="none">
-		<part>
-		00 00 20 15 00 02 00 00
-		00 00 3E A0 01 40 00 66
-		</part>
 	</rom>
 
-	<nvram index="4" size="322"></nvram>
+	<nvram></nvram>
 
 	<remark></remark>
 

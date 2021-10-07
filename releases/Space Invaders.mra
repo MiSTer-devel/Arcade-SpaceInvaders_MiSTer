@@ -25,18 +25,18 @@
 	<joystick>2-way horizontal</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,Start,Select,R" names="Fire,-,-,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="16,17" ids="3,4,5,6" name="Lives"></dip>
 		<dip bits="18" ids="Off,On" name="Tilt"></dip>
 		<dip bits="19" ids="1500,1000" name="Bonus Life"></dip>
 		<dip bits="23" ids="On,Off" name="Display Coinage"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>00</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="invaders.zip">
 		<part crc="734f5ad8" name="invaders.h"></part>
 		<part crc="6bfaca4a" name="invaders.g"></part>
@@ -176,13 +176,14 @@
 07070404040404040407070707070707
 07070707070707070101010107070707
 		</part>
-		</rom>
+	</rom>
 	<rom index="2"></rom>
 	<rom index="3" md5="none">
 		<part>
-				 00 00 20 F4 00 02 00 00
-				</part>
-		</rom>
+		00 10 00 00 00 FF 00 02 00 02 00 01 00 FF 02 00
+		00 00 20 F4 00 02 00 00
+		</part>
+	</rom>
 	<rom index="4"></rom>
 
 	<nvram index="4" size="2"></nvram>

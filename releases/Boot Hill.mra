@@ -26,17 +26,17 @@
 	<joystick>8-way</joystick>
 	<special_controls></special_controls>
 	<num_buttons>1</num_buttons>
-	<buttons default="A,X,Y,Start,Select,R" names="Fire,GunUp,GunDown,-,Start 1P,Start 2P,Coin"></buttons>
+	<buttons default="A,X,Y,Start,Select,R,L" names="Fire,GunUp,GunDown,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
 	<switches default="00,00,00">
 		<dip bits="16,17" ids="1C_1C,1C_2C,2C_1C,2C_2C" name="Coinage"></dip>
 		<dip bits="18,19" ids="60sec,70sec,80sec,90sec" name="Game Time"></dip>
 		<dip bits="20" ids="Off,On" name="Service"></dip>
-		</switches>
+	</switches>
 
 	<rom index="1">
 		<part>05</part>
-		</rom>
+	</rom>
 	<rom index="0" md5="none" zip="boothill.zip">
 		<part crc="1615d077" name="romh.cpu"></part>
 		<part crc="65a90420" name="romg.cpu"></part>
@@ -45,7 +45,7 @@
 		<part repeat="4096">00</part>
 		<part repeat="4096">00</part>
 		<part repeat="2048">FF</part>
-		</rom>
+	</rom>
 	<rom index="2">
 		<part>
 2D7561002F7463002E76630035766300
@@ -14965,7 +14965,7 @@ C601BF01BB01B601B201AD01AA01A701A4019F0199019901930190018E018901
 230122011F011C0118011901120112010D010C010A010701060101010201FE00
 0001F400FE00EB00FF000800
         </part>
-		</rom>
+	</rom>
 
 	<nvram></nvram>
 

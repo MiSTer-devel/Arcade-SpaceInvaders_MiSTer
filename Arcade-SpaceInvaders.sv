@@ -42,8 +42,9 @@ module emu
 	output        CE_PIXEL, // VGA_CE,
 	
 	//Video aspect ratio for HDMI. Most retro systems have ratio 4:3.
-	output [11:0] VIDEO_ARX,
-	output [11:0] VIDEO_ARY,
+	//if VIDEO_ARX[12] or VIDEO_ARY[12] is set then [11:0] contains scaled size instead of aspect ratio.
+	output [12:0] VIDEO_ARX,
+	output [12:0] VIDEO_ARY,
 
 	output  [7:0] VGA_R,
 	output  [7:0] VGA_G,
@@ -96,6 +97,11 @@ module emu
 	output  [1:0] LED_POWER,
 	output  [1:0] LED_DISK,
 
+	// I/O board button press simulation (active high)
+	// b[1]: user button
+	// b[0]: osd button
+	output  [1:0] BUTTONS,
+
 	input         CLK_AUDIO, // 24.576 MHz
 	output [15:0] AUDIO_L,
 	output [15:0] AUDIO_R,
@@ -112,12 +118,6 @@ module emu
 	output        SD_CS,
 	input         SD_CD,
 
-	// I/O board button press simulation (active high)
-	// b[1]: user button
-	// b[0]: osd button
-	output  [1:0] BUTTONS,
-
-`ifdef USE_DDRAM
 	//High latency DDR3 RAM interface
 	//Use for non-critical time purposes
 	output        DDRAM_CLK,
@@ -130,9 +130,8 @@ module emu
 	output [63:0] DDRAM_DIN,
 	output  [7:0] DDRAM_BE,
 	output        DDRAM_WE,
-`endif
 
-`ifdef USE_SDRAM
+	//SDRAM interface with lower latency
 	output        SDRAM_CLK,
 	output        SDRAM_CKE,
 	output [12:0] SDRAM_A,
@@ -144,6 +143,19 @@ module emu
 	output        SDRAM_nCAS,
 	output        SDRAM_nRAS,
 	output        SDRAM_nWE,
+
+`ifdef MISTER_DUAL_SDRAM
+	//Secondary SDRAM
+	//Set all output SDRAM_* signals to Z ASAP if SDRAM2_EN is 0
+	input         SDRAM2_EN,
+	output        SDRAM2_CLK,
+	output [12:0] SDRAM2_A,
+	output  [1:0] SDRAM2_BA,
+	inout  [15:0] SDRAM2_DQ,
+	output        SDRAM2_nCS,
+	output        SDRAM2_nCAS,
+	output        SDRAM2_nRAS,
+	output        SDRAM2_nWE,
 `endif
 
 	input         UART_CTS,
@@ -164,24 +176,19 @@ module emu
 	input         OSD_STATUS
 );
 
-assign VGA_F1         = 0;
-assign VGA_SCALER     = 0;
-assign HDMI_FREEZE    = 0;
-assign USER_OUT       = 1;
-assign LED_USER       = ioctl_download;
-assign LED_DISK       = 0;
-assign LED_POWER      = 0;
-assign BUTTONS        = 0;
-assign AUDIO_MIX      = 0;
-assign {UART_RTS, UART_TXD, UART_DTR} = 0;
 assign {SD_SCK, SD_MOSI, SD_CS} = 'Z;
+assign {UART_RTS, UART_TXD, UART_DTR} = 0;
 
-`ifdef MISTER_FB
-	assign FB_FORCE_BLANK = 0;
-`ifdef MISTER_FB_PALETTE
-	assign {FB_PAL_CLK, FB_PAL_ADDR, FB_PAL_DOUT, FB_PAL_WR} = '0;
-`endif
-`endif
+assign VGA_F1    = 0;
+assign VGA_SCALER= 0;
+assign USER_OUT  = '1;
+assign LED_USER  = ioctl_download;
+assign LED_DISK  = 0;
+assign LED_POWER = 0;
+assign BUTTONS   = 0;
+assign AUDIO_MIX = 0;
+assign HDMI_FREEZE = 0;
+assign FB_FORCE_BLANK = 0;
 
 wire [1:0] ar = status[26:25];
 
@@ -198,6 +205,10 @@ localparam CONF_STR = {
 	"O6,Flip Screen (Vert only),No,Yes;",
 	"OGJ,CRT H-Sync Adjust,0,1,2,3,4,5,6,7,-8,-7,-6,-5,-4,-3,-2,-1;",
 	"OKN,CRT V-Sync Adjust,0,1,2,3,4,5,6,7,-8,-7,-6,-5,-4,-3,-2,-1;",
+	"H4OR,Autosave Hiscores,Off,On;",
+	"P1,Pause options;",
+	"P1OS,Pause when OSD is open,On,Off;",
+	"P1OT,Dim video after 10s,On,Off;",
 	"-;",
 	"DIP;",
 	"-;",
@@ -214,7 +225,7 @@ localparam CONF_STR = {
 	"H3OEF,Crosshair,Small,Medium,Big,None;",
 	"-;",
 	"R0,Reset;",
-	"J1,Fire 1,Fire 2,Fire 3,Fire 4,Start 1P,Start 2P,Coin;",
+	"J1,Fire 1,Fire 2,Fire 3,Fire 4,Start 1P,Start 2P,Coin,Pause;",
 	"V,v",`BUILD_DATE
 };
 
@@ -245,6 +256,7 @@ wire        direct_video;
 
 wire        ioctl_download;
 wire        ioctl_upload;
+wire        ioctl_upload_req;
 wire  [7:0] ioctl_index;
 wire        ioctl_wr;
 wire [24:0] ioctl_addr;
@@ -272,12 +284,13 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
 
 	.buttons(buttons),
 	.status(status),
-	.status_menumask({&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
+	.status_menumask({~hs_configured,&gun_mode|!gun_game,!gun_game,landscape,direct_video}),
 	.forced_scandoubler(forced_scandoubler),
 	.gamma_bus(gamma_bus),
 	.direct_video(direct_video),
 
 	.ioctl_upload(ioctl_upload),
+	.ioctl_upload_req(ioctl_upload_req),
 	.ioctl_download(ioctl_download),
 	.ioctl_wr(ioctl_wr),
 	.ioctl_addr(ioctl_addr),
@@ -363,6 +376,20 @@ wire [2:0] mn_col;
 
 wire [15:0] joy = joy1 | joy2;
 
+wire m_pause   = joy[11];
+
+// PAUSE SYSTEM
+wire				pause_cpu;
+wire [23:0]		rgb_out;
+pause #(8,8,8,10) pause (
+	.*,
+	.r(rgbdata[23:16]),
+	.g(rgbdata[15:8]),
+	.b(rgbdata[7:0]),
+	.user_button(m_pause),
+	.pause_request(hs_pause),
+	.options(~status[29:28])
+);
 
 ///////////////////////////////////////////////////////////////////
 
@@ -407,7 +434,7 @@ arcade_video #(.WIDTH(260), .DW(24)) arcade_video
         .clk_video(clk_40),
         .ce_pix(ce_pix),
 
-        .RGB_in(rgbdata),
+        .RGB_in(rgb_out),
         .HBlank(hblank),
         .VBlank(vblank),
         .HSync(HSync),
@@ -1559,6 +1586,8 @@ invaderst invaderst(
 		.OverlayTest(1'd0),
 `endif
 
+		.pause(pause_cpu),
+
 		.Trigger_ShiftCount(Trigger_ShiftCount),
 		.Trigger_ShiftData(Trigger_ShiftData),
 		.Trigger_AudioDeviceP1(Trigger_AudioDeviceP1),
@@ -1601,9 +1630,9 @@ invaderst invaderst(
 
 			.hs_address(hs_address),
 			.hs_data_in(hs_data_in),
-			.hs_data_out(ioctl_din),
-			.hs_write(hs_write),
-			.hs_access(hs_access)
+			.hs_data_out(hs_data_out),
+			.hs_write(hs_write_enable),
+			.hs_access(hs_access_read|hs_access_write)
 	);
 
 invaders_audio invaders_audio (
@@ -1736,27 +1765,38 @@ virtualgun virtualgun
 ////////////////////////////  Samples   ///////////////////////////////////
 
 reg  [27:0] wav_addr;
-wire [15:0] wav_data;
+wire [15:0] wav_data_o;
 wire        wav_want_byte;
 wire [15:0] samples_left;
 wire [15:0] samples_right;
 
-	sdram sdram
-	(
-		.*,
-		.init(~pll_locked),
-		.clk(clk_mem),
+reg  Ready_L;
+wire Ready;
+reg  [15:0] wav_data;
 
-		.addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
-		.we(ioctl_download && ioctl_wr && (ioctl_index == 6)),
-		.rd(~ioctl_download & wav_want_byte),
-		.din(ioctl_dout),
-		.dout(wav_data),
+        sdram sdram
+        (
+                .*,
+                .init(~pll_locked),
+                .clk(clk_mem),
 
-		.ready()
-	);
-	
-	
+                .addr(ioctl_download ? ioctl_addr : {wav_addr[24:1],1'd0}),
+                .we(ioctl_download && ioctl_wr && (ioctl_index == 6)),
+                .rd(~ioctl_download & wav_want_byte),
+                .din(ioctl_dout),
+                .dout(wav_data_o),
+
+                .ready(Ready)
+        );
+
+
+always @(posedge clk_mem)
+begin
+         Ready_L <= Ready;
+         // on Ready set keep data
+         if(Ready && ~Ready_L) wav_data <= ~wav_data_o;
+end
+
 // Link to Samples module
 
 samples samples
@@ -1909,35 +1949,35 @@ cloud cloud
 
 
 // HISCORE SYSTEM
-
+// --------------
 wire [15:0]hs_address;
-wire [7:0]hs_data_in;
-wire hs_write;
-wire hs_access;
+wire [7:0] hs_data_in;
+wire [7:0] hs_data_out;
+wire hs_write_enable;
+wire hs_access_read;
+wire hs_access_write;
+wire hs_pause;
+wire hs_configured;
 
 hiscore #(
 	.HS_ADDRESSWIDTH(16),
 	.CFG_ADDRESSWIDTH(6),
-	.CFG_LENGTHWIDTH(2),
-	.DELAY_CHECKWAIT(4'b1111),
-	.DELAY_CHECKHOLD(1'b1)
-
+	.CFG_LENGTHWIDTH(2)
 ) hi (
+	.*,
 	.clk(clk_sys),
-	.reset(reset),
-	.delay(1'b0),
-	.ioctl_upload(ioctl_upload),
-	.ioctl_download(ioctl_download),
-	.ioctl_wr(ioctl_wr),
-	.ioctl_addr(ioctl_addr),
-	.ioctl_dout(ioctl_dout),
-	.ioctl_din(ioctl_din),
-	.ioctl_index(ioctl_index),
+	.paused(pause_cpu),
+	.autosave(status[27]),
 	.ram_address(hs_address),
+	.data_from_ram(hs_data_out),
 	.data_to_ram(hs_data_in),
-	.ram_write(hs_write),
-	.ram_access(hs_access)
+	.data_from_hps(ioctl_dout),
+	.data_to_hps(ioctl_din),
+	.ram_write(hs_write_enable),
+	.ram_intent_read(hs_access_read),
+	.ram_intent_write(hs_access_write),
+	.pause_cpu(hs_pause),
+	.configured(hs_configured)
 );
-
 
 endmodule
