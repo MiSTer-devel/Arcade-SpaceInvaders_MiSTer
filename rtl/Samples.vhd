@@ -248,7 +248,8 @@ begin
 											end if;
 											
 										when "01" => -- 16 bit mono
-											wave_left <= wave_data(31 downto 16);											
+											wave_left  <= wave_data(31 downto 16);											
+											wave_right <= wave_data(31 downto 16);											
 											
 										when "10" => -- 8 bit stereo
 											wave_left <= (not wave_data(23)) & wave_data(22 downto 16) & x"00";
