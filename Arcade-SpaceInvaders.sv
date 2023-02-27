@@ -22,6 +22,7 @@
 // Enable overlay (or not)
 //`define DEBUG_MODE
 
+
 module emu
 (
 	//Master input clock
@@ -32,15 +33,15 @@ module emu
 	input         RESET,
 
 	//Must be passed to hps_io module
-	inout  [45:0] HPS_BUS,
+	inout  [48:0] HPS_BUS,
 
 	//Base video clock. Usually equals to CLK_SYS.
-	output        CLK_VIDEO, // VGA_CLK,
+	output        CLK_VIDEO,
 
-	//Multiple resolutions are supported using different VGA_CE rates.
+	//Multiple resolutions are supported using different CE_PIXEL rates.
 	//Must be based on CLK_VIDEO
-	output        CE_PIXEL, // VGA_CE,
-	
+	output        CE_PIXEL,
+
 	//Video aspect ratio for HDMI. Most retro systems have ratio 4:3.
 	//if VIDEO_ARX[12] or VIDEO_ARY[12] is set then [11:0] contains scaled size instead of aspect ratio.
 	output [12:0] VIDEO_ARX,
@@ -55,13 +56,14 @@ module emu
 	output        VGA_F1,
 	output [1:0]  VGA_SL,
 	output        VGA_SCALER, // Force VGA scaler
+	output        VGA_DISABLE, // analog out is off
 
 	input  [11:0] HDMI_WIDTH,
 	input  [11:0] HDMI_HEIGHT,
 	output        HDMI_FREEZE,
 
 `ifdef MISTER_FB
-	// Use framebuffer in DDRAM (USE_FB=1 in qsf)
+	// Use framebuffer in DDRAM
 	// FB_FORMAT:
 	//    [2:0] : 011=8bpp(palette) 100=16bpp 101=24bpp 110=32bpp
 	//    [3]   : 0=16bits 565 1=16bits 1555
@@ -176,18 +178,23 @@ module emu
 	input         OSD_STATUS
 );
 
-assign {SD_SCK, SD_MOSI, SD_CS} = 'Z;
+assign ADC_BUS  = 'Z;
+assign USER_OUT = '1;
 assign {UART_RTS, UART_TXD, UART_DTR} = 0;
+assign {SD_SCK, SD_MOSI, SD_CS} = 'Z;
 
 assign VGA_F1    = 0;
 assign VGA_SCALER= 0;
+assign VGA_DISABLE=0;
+assign HDMI_FREEZE = 0;
+
+
 assign USER_OUT  = '1;
 assign LED_USER  = ioctl_download;
 assign LED_DISK  = 0;
 assign LED_POWER = 0;
 assign BUTTONS   = 0;
 assign AUDIO_MIX = 0;
-assign HDMI_FREEZE = 0;
 assign FB_FORCE_BLANK = 0;
 
 wire [1:0] ar = status[26:25];
@@ -253,6 +260,7 @@ wire [31:0] status;
 wire  [1:0] buttons;
 wire        forced_scandoubler;
 wire        direct_video;
+wire        video_rotated;
 
 wire        ioctl_download;
 wire        ioctl_upload;
@@ -288,6 +296,7 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
 	.forced_scandoubler(forced_scandoubler),
 	.gamma_bus(gamma_bus),
 	.direct_video(direct_video),
+   .video_rotated(video_rotated),
 
 	.ioctl_upload(ioctl_upload),
 	.ioctl_upload_req(ioctl_upload_req),
@@ -304,8 +313,8 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
 	.joystick_1(joy2),
 	.joystick_2(joy3),
 	.joystick_3(joy4),
-	.joystick_analog_0(joya),
-	.joystick_analog_1(joya2),
+	.joystick_l_analog_0(joya),
+	.joystick_l_analog_1(joya2),
 	.ps2_mouse(ps2_mouse)
 );
 
@@ -398,6 +407,7 @@ wire hblank;
 wire vblank;
 wire r,g,b;
 wire no_rotate = AllowRotate ? status[2] | direct_video | landscape : 1'd1;
+wire flip = 0;
 
 reg Force_Red;
 reg [23:0] Background_Col;
