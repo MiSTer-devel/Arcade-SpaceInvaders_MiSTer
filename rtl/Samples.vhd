@@ -314,17 +314,17 @@ begin
 							end if;
 							
 							-- Debug info to overlay
-							HEX1(4 downto 0) <= "10000"; -- Space
-							HEX1(8 downto 5) <= wave_left(15 downto 12);
-							HEX1(13 downto 10) <= wave_left(11 downto 8);
-							HEX1(18 downto 15) <= wave_left(7 downto 4);
-							HEX1(23 downto 20) <= wave_left(3 downto 0);
-							HEX1(29 downto 25) <= "10000"; -- Space
-							HEX1(33 downto 30) <= wave_right(15 downto 12);
-							HEX1(38 downto 35) <= wave_right(11 downto 8);
-							HEX1(43 downto 40) <= wave_right(7 downto 4);
-							HEX1(48 downto 45) <= wave_right(3 downto 0);
-							HEX1(54 downto 50) <= "10000"; -- Space
+--							HEX1(4 downto 0) <= "10000"; -- Space
+--							HEX1(8 downto 5) <= wave_left(15 downto 12);
+--							HEX1(13 downto 10) <= wave_left(11 downto 8);
+--							HEX1(18 downto 15) <= wave_left(7 downto 4);
+--							HEX1(23 downto 20) <= wave_left(3 downto 0);
+--							HEX1(29 downto 25) <= "10000"; -- Space
+--							HEX1(33 downto 30) <= wave_right(15 downto 12);
+--							HEX1(38 downto 35) <= wave_right(11 downto 8);
+--							HEX1(43 downto 40) <= wave_right(7 downto 4);
+--							HEX1(48 downto 45) <= wave_right(3 downto 0);
+--							HEX1(54 downto 50) <= "10000"; -- Space
 							
 						end if; -- Playing
 

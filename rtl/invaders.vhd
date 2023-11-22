@@ -76,7 +76,7 @@ entity invaderst is
 		SoundCtrl3      : out std_logic_vector(7 downto 0);
 		SoundCtrl5      : out std_logic_vector(7 downto 0);
 		Tone_Low        : out std_logic_vector(5 downto 0);
-		Tone_High       : out std_logic_vector(6 downto 0);
+		Tone_High       : out std_logic_vector(7 downto 0);
 		Rst_n_s         : out std_logic;
 		RWE_n           : out std_logic;
 		CPU_RW_n        : out std_logic; -- for colour ram decode		
@@ -333,7 +333,7 @@ begin
 				Tone_Low <= DB(5 downto 0);
 			end if;
 			if Trigger_Tone_High = '1' then
-				Tone_High <= DB(6 downto 0);
+				Tone_High <= DB(7 downto 0);
 			end if;
 			OldSample := Sample;
 		end if;

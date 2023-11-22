@@ -14,6 +14,8 @@ module invaders_memory(
 	input     [7:0]  dn_data,
 	input            dn_wr,
 	output           Vortex_bit,
+	output    [7:0]  PlanePos,
+	
 	// Machine ID (where needed)
 	input            mod_vortex,
 	input            mod_attackforce,
@@ -132,6 +134,11 @@ always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacech
 			default : Rom_out = 8'b00000000;
 		endcase
 	end
+	
+	// Save Polaris Plane position
+	if (rom_addr == 16'b0010000011101010 & ~RW_n) begin
+		PlanePos = Ram_in;
+	end;
 end
 
 // For Vortex - Read next screen byte (picked up in real hardware in latch to load shifter)
