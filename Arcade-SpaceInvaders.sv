@@ -837,7 +837,7 @@ wire [7:0] SR= { S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7]} ;
 
 // Midway Tone Generator data
 wire [5:0] Tone_Low;
-wire [6:0] Tone_High; // Also used for Balloon Bomber
+wire [7:0] Tone_High; // Also used for Balloon Bomber and Polaris
 
 always @(*) begin
 
@@ -1397,17 +1397,27 @@ always @(*) begin
 				landscape<=0;
 				ccw<=1;
 				color_rom_enabled<=1;
-				GDB0 <= sw[0] | { m_up2,m_left2,m_down2,m_right2,m_fire2a,1'b0,1'b0,1'b0};
-				GDB1 <= sw[1] | { m_up1,m_left1,m_down1,m_right1,m_fire1a,m_start1,m_start2,m_coin1};
+				
+				GDB0 <= sw[0];
+				
+				if (software_flip) begin
+					GDB1 <= { m_up2,m_left2,m_down2,m_right2,m_fire2a,m_start1,m_start2,m_coin1};
+				end
+				else begin
+					GDB1 <= { m_up1,m_left1,m_down1,m_right1,m_fire1a,m_start1,m_start2,m_coin1};
+				end;
+				
 				GDB2 <= sw[2];
 
+            Audio_Output           <= SoundCtrl3[5];
 				Trigger_ShiftCount     <= PortWr[1];
+				Trigger_Tone_High      <= PortWr[2];
 				Trigger_ShiftData      <= PortWr[3];
+				Trigger_AudioDeviceP1  <= PortWr[4];
 				Trigger_WatchDogReset  <= PortWr[5];
-				Trigger_AudioDeviceP1  <= PortWr[2];
-				Trigger_AudioDeviceP2  <= PortWr[4];
-				 //<= PortWr[6];
-				 software_flip          <= 0;      
+				Trigger_AudioDeviceP2  <= PortWr[6];
+				
+				software_flip <= SoundCtrl5[5] & sw[3][0];
 
 				// Background colour split mid screen
 				if (VCount < 2) begin
@@ -1630,6 +1640,7 @@ invaderst invaderst(
 			.dn_data(ioctl_dout),
 			.dn_wr(ioctl_wr&ioctl_index==0),
 			.Vortex_bit(Vortex_Col),
+			.PlanePos(PlanePos),
 			.mod_vortex(mod==mod_vortex),
 			.mod_attackforce(mod==mod_attackforce),
 			.mod_cosmo(mod==mod_cosmo),
@@ -1729,6 +1740,7 @@ always @(posedge clk_40) begin
 	else begin
 		// Mix cloud background in (Balloon Bomber or Polaris)
 		if ((mod==mod_ballbomb & BBPixel==1'd1) || ((mod==mod_polaris & PolarisPixel==1'd1) && (VCount > 1))) begin
+			// bg_a ?
 			bg_b <= 255;
 			bg_g <= 255;
 			bg_r <= 255;
@@ -1812,7 +1824,7 @@ end
 samples samples
 (
 	.audio_enabled(Audio_Output),
-	.audio_port_0(mod == mod_amazingmaze ? MazeTrigger : mod == mod_lupin ? LupinPort : SoundCtrl3),	
+	.audio_port_0(mod == mod_polaris ? {2'd0,SoundCtrl5[3] || SoundCtrl5[4],~SoundCtrl3[3],SoundCtrl3[3:0]} : mod == mod_amazingmaze ? MazeTrigger : mod == mod_lupin ? LupinPort : SoundCtrl3),	
 	.audio_port_1(SoundCtrl5),
 
 	.wave_addr(wav_addr),        
@@ -1831,10 +1843,10 @@ samples samples
 	.reset(reset_mem),
 	
 `ifdef DEBUG_MODE
-	.Hex1(Line1),
+	.Hex1(Line2),
 `endif
 	
-	.audio_in(mod == mod_ballbomb ? BB_Tone_Out : (mod == mod_280zap || mod == mod_lagunaracer)? zap_audio_data : Tone_Out),
+	.audio_in(mod == mod_polaris ? P_Tone_Out : mod == mod_ballbomb ? BB_Tone_Out : (mod == mod_280zap || mod == mod_lagunaracer)? zap_audio_data : Tone_Out),
 	.audio_out_L(samples_left),
 	.audio_out_R(samples_right)
 );
@@ -1895,12 +1907,26 @@ reg [15:0] BB_Tone_Out;
 BALLOON_MUSIC BALLOON_MUSIC
 (
     .I_MUSIC_ON(Tone_High != 7'd127),
-	 .I_TONE({1'b1,Tone_High}),
+	 .I_TONE({1'b1,Tone_High[6:0]}),
     .O_AUDIO(BB_Tone_Out),
     .CLK(clk_10)
 );
 
-// Overlay!
+// Polaris tune generator (music or plane position)
+reg [15:0] P_Tone_Out;
+reg  [7:0] PlanePos;
+wire [7:0] PolarTone = SoundCtrl5[1] ? PlanePos : Tone_High;
+
+BALLOON_MUSIC POLARIS_MUSIC
+(
+    .I_MUSIC_ON(PolarTone != 8'd255),
+	 .I_TONE(PolarTone),
+    .O_AUDIO(P_Tone_Out),
+    .CLK(clk_10)
+);
+
+	
+// Debug Overlay!
 
 `ifdef DEBUG_MODE
 
@@ -1926,6 +1952,17 @@ ovo OVERLAY
     .in0(Line1),
     .in1(Line2)
 );
+
+always @(posedge clk_sys)
+begin
+	Line1[4:0] <= 5'b10000;
+	Line1[8:5] <= Tone_High[7:4];
+	Line1[13:10] <= Tone_High[3:0];
+	Line1[19:15] <= 5'b10000;
+	Line1[23:20] <= PlanePos[7:4];
+	Line1[29:25] <= PlanePos[3:0];
+	Line1[34:30] <= 5'b10000;
+end	
 
 `endif
 
