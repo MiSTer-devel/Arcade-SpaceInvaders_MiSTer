@@ -190,8 +190,7 @@ begin
 	ISel(1) <= Status_i(0) nor Status_i(6);
 
 	with ISel select
-		-- interrupt order changed
-		DI <= "110" & not CntE7(2) & CntE7(2) & "111" when "00",    
+		DI <= "110" & CntE7(2) & not CntE7(2) & "111" when "00",		
 			GDB when "01",
 			IB when "10",
 			RR(7 downto 0) when others;
