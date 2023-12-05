@@ -9,13 +9,14 @@
 	<rbf>spaceinvaders</rbf>
 	<mameinfo parent="0" cpp="8080bw" input="polaris"/>
 	<display type="raster" rotate="270"/>
-	<switches default="00,00,20">
+	<switches default="00,00,20,02">
 		<dip bits="16,17" name="Lives" ids="3,4,5,6"/>
 		<dip bits="18"    name="Cabinet" ids="Upright,Cocktail"/>
 		<dip bits="19"    name="Invincible Test" ids="Off,On"/>
 		<dip bits="20"    name="Demo Sounds" ids="Off,On"/>
 		<dip bits="23"    name="High Score Preset Mode" ids="Off,On"/>
 		<dip bits="24" ids="Upright,Cocktail" name="Cabinet"></dip>
+		<dip bits="25" ids="Off,On" name="Overclock (reduce flicker)"></dip>
 	</switches>
 	<buttons names="Fire,-,-,-,Start 1P,Start 2P,Coin" default="A,Start,Select,R"/>
 	<rom index="0" zip="polaris.zip" md5="none">

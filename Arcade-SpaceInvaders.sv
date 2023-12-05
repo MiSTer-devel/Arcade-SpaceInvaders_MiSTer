@@ -1621,8 +1621,8 @@ invaderst invaderst(
 		.ShiftReverse(ShiftReverse),
 
 		.mod_vortex(mod==mod_vortex),
+		.overclock(mod_polaris && sw[3][1]),
 		.Vortex_Col(Vortex_Col)
-
    );
 		  
 	invaders_memory invaders_memory (
