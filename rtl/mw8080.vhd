@@ -101,6 +101,7 @@ entity mw8080 is
 		VShift		    : in  std_logic_vector(3 downto 0);
 		HShift		    : in  std_logic_vector(3 downto 0);
 	   mod_vortex      : in std_logic;
+		overclock       : in std_logic;
 		Vortex_Col      : in std_logic;
 		Pause           : in std_logic
 	);
@@ -162,8 +163,11 @@ architecture struct of mw8080 is
 	signal VSync_Start  :  std_logic_vector(8 downto 0);
 	signal VSync_End    :  std_logic_vector(8 downto 0);
 
+	signal CPUEnable   : std_logic;
 begin
-	ENA <= ClkEnCnt(2);
+	-- Polaris overclock option
+	ENA <= CPUEnable;
+	CPUEnable <= ClkEnCnt(2) or (overclock and not VidEn);
 	Status <= Status_i;
 	Ready <= Ready_i and not Pause;
 	DB <= DO;
@@ -190,8 +194,7 @@ begin
 	ISel(1) <= Status_i(0) nor Status_i(6);
 
 	with ISel select
-		-- interrupt order changed
-		DI <= "110" & not CntE7(2) & CntE7(2) & "111" when "00",    
+		DI <= "110" & CntE7(2) & not CntE7(2) & "111" when "00",		
 			GDB when "01",
 			IB when "10",
 			RR(7 downto 0) when others;
@@ -209,7 +212,7 @@ begin
 		port map (
 			RESET_n => Rst_n,
 			CLK => Clk,
-			CLKEN => ClkEnCnt(2),
+			CLKEN => CPUEnable, -- was ClkEnCnt(2),
 			READY => Ready_i and not Pause,
 			HOLD => Hold,
 			INT => Int_i,

@@ -123,6 +123,7 @@ entity invaderst is
 		ShiftReverse 			 : out std_logic;
 
 		mod_vortex      		 :	in std_logic;
+		overclock      		 :	in std_logic;
 		Vortex_Col      		 : in std_logic
 );
 end invaderst;
@@ -174,6 +175,7 @@ architecture rtl of invaderst is
 		HShift		    : in  std_logic_vector(3 downto 0);
 
 	   mod_vortex      : in std_logic;
+		overclock       : in std_logic;
 		Vortex_Col      : in std_logic;
 		pause           : in std_logic
 	);
@@ -274,6 +276,7 @@ begin
 		   VShift => VShift,
 		   HShift => HShift,
 			mod_vortex => mod_vortex,
+			overclock => overclock,
 			Vortex_Col => Vortex_Col,
 			pause => pause
 		);
