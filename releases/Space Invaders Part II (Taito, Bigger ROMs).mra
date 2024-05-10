@@ -27,12 +27,13 @@
 	<num_buttons>1</num_buttons>
 	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
-	<switches default="40,80,00">
+	<switches default="40,80,00,00,00">
 		<dip bits="16" ids="3,4" name="Lives"></dip>
 		<dip bits="17" ids="On,Off" name="Rotate Images"></dip>
 		<dip bits="18" ids="Off,On" name="Tilt"></dip>
 		<dip bits="19" ids="Off,On" name="Preset Mode"></dip>
 		<dip bits="23" ids="Off,On" name="Coin Info"></dip>
+		<dip bits="32" ids="No,Yes" name="Freeplay"></dip>
 	</switches>
 
 	<rom index="1">

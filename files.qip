@@ -22,6 +22,7 @@ set_global_assignment -name VHDL_FILE rtl/bb_audio.vhd
 set_global_assignment -name VHDL_FILE rtl/Polaris_cloud.vhd
 set_global_assignment -name VHDL_FILE rtl/zap_audio.vhd
 set_global_assignment -name VHDL_FILE rtl/maze_audio.vhd
+set_global_assignment -name VHDL_FILE rtl/freeplay.vhd
 set_global_assignment -name SYSTEMVERILOG_FILE rtl/virtualgun.sv
 set_global_assignment -name VERILOG_FILE rtl/hiscore.v
 set_global_assignment -name VERILOG_FILE rtl/pause.v
