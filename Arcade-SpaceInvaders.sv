@@ -18,8 +18,11 @@
 //  with this program; if not, write to the Free Software Foundation, Inc.,
 //  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //============================================================================
+//
+// 10 May 2024 - MacroFPGA - Update SYS, Add Shuffleboard, Add freeplay option for some games
+//
 
-// Enable overlay (or not)
+// Enable overlay (or not) for debugging
 //`define DEBUG_MODE
 
 
@@ -318,10 +321,32 @@ hps_io #(.CONF_STR(CONF_STR)) hps_io
 	.ps2_mouse(ps2_mouse)
 );
 
+// Freeplay option 
 
+wire AllowFreeplay = (mod==mod_ballbomb || mod==mod_lunarrescue || mod==mod_lupin || mod==mod_polaris || mod==mod_spaceinvaders || mod==mod_spaceinvadersii || mod==mod_vortex);
+
+wire m_start1;
+wire m_start2;
+wire m_coin1;
+/*
 wire m_start1  = joy[8];
 wire m_start2  = joy[9];
 wire m_coin1   = joy[10];
+*/
+
+freeplay #(
+	.count(1000000),
+	.delay(2))
+freeplay (
+  .i_clk(clk_sys),
+  .i_coin(joy[10]),
+  .i_start1(joy[8]),
+  .i_start2(joy[9]),
+  .o_coin(m_coin1),
+  .o_start1(m_start1),
+  .o_start2(m_start2),
+  .enable(AllowFreeplay && sw[4][0])
+);
 
 wire m_right1  = joy1[0];
 wire m_left1   = joy1[1];
@@ -399,6 +424,7 @@ pause #(8,8,8,10) pause (
 	.pause_request(hs_pause),
 	.options(~status[29:28])
 );
+
 
 ///////////////////////////////////////////////////////////////////
 
@@ -802,6 +828,26 @@ begin
    endcase
 end
 
+/* Mouse - Trackball for Shuffleboard */
+
+reg old_state;
+reg signed [7:0] Sum_X;
+reg signed [7:0] Sum_Y;
+
+always @(posedge clk_sys) 
+begin
+	/* sum up delta changes from mouse */
+
+	old_state <= ps2_mouse[24];
+	if(old_state != ps2_mouse[24]) begin
+		// Mouse X
+		Sum_X <= Sum_X - {ps2_mouse[4], ps2_mouse[15:9]};  // 1/2 Scale
+
+		// Mouse Y
+		Sum_Y <= Sum_Y - {ps2_mouse[5], ps2_mouse[23:17]}; // 1/2 Scale
+	end
+end
+
 reg fire_toggle = 0;
 always @(posedge m_fire_a) fire_toggle <= ~fire_toggle;
 
@@ -894,25 +940,22 @@ always @(*) begin
         begin
           landscape<=0;
           ccw<=0;
+
           GDB1 <= S;
-	  // IN0
-          GDB2 <= sw[1] | ~{ 1'b0, m_right,m_left,m_fire_a,1'b0,m_start1, m_start2, m_coin1 };
+          GDB2 <= sw[0];
           GDB3 <= SR;
-	  // IN1
-	  // GB4 <=
-	  // IN2 // trackball Y
-	  // GB5 <=
-	  // IN3 // trackball X
-	  // GB6 <=
-	  // 4,5,6 ???
+			 GDB4 <= ~{ 4'd0, m_fire_a, m_start2, m_start1, m_coin1 };	  // IN0
+			 GDB5 <= Sum_Y;  // Trackball
+			 GDB6 <= Sum_X;  // Trackball
+
           Trigger_ShiftCount     <= PortWr[1];
           Trigger_AudioDeviceP1  <= PortWr[5];
           Trigger_ShiftData      <= PortWr[2];
           Trigger_AudioDeviceP2  <= PortWr[6];
           Trigger_WatchDogReset  <= PortWr[4];
           software_flip          <= 0;      
-
         end
+		  
         mod_vortex:
         begin
           //GDB0 -- all FF
@@ -1492,8 +1535,8 @@ always @(*) begin
             landscape<=0;
             ccw<=1;
             color_rom_enabled<=1;
-            GDB0 <= sw[0] | { 1'b0, 1'b0,1'b0,  m_fire2a,  m_right2,m_down2,m_left2,m_up2};
-            GDB1 <= sw[1] | { m_coin1,m_start1,m_start2,m_fire_a,m_right,m_down,m_left,m_up};
+            GDB0 <= { sw[0][7:5],  m_fire2a,  m_right2,m_down2,m_left2,m_up2};
+            GDB1 <= { m_coin1,m_start1,m_start2,m_fire_a,m_right,m_down,m_left,m_up};
             GDB2 <= sw[2];
 				software_flip <= 0;    
 				Background_Col <= {8'd0,8'd0,8'd255}; // Blue		

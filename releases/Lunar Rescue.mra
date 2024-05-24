@@ -27,7 +27,9 @@
 	<num_buttons>1</num_buttons>
 	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
-	<switches></switches>
+	<switches default="00,00,00,00,00">
+		<dip bits="32" ids="No,Yes" name="Freeplay"></dip>
+	</switches>
 
 	<rom index="1">
 		<part>06</part>

@@ -27,7 +27,12 @@
 	<num_buttons>1</num_buttons>
 	<buttons default="A,Start,Select,R,L" names="Fire,-,-,-,Start 1P,Start 2P,Coin,Pause"></buttons>
 
-	<switches></switches>
+	<switches default="D4">
+		<dip bits="00,01" name="Language" ids="English,French,German,German"/>
+		<dip bits="02,03" name="Pts G1/G2" ids="25/11,35/15,40/18,50/21"/>
+		<dip bits="04,05" name="Coinage" ids="1C2P,1C1P,2C2P,2C1P"/>
+		<dip bits="06"    name="Time Limit" ids="Off,On"/>
+	</switches>
 
 	<rom index="1">
 		<part>01</part>
