@@ -61,6 +61,7 @@ entity mw8080 is
 	port(
 		Rst_n           : in  std_logic;
 		Clk             : in  std_logic;
+		StarCLK			 : in  std_logic;  -- for Cosmo stars		
 		ENA             : out std_logic;
 		RWE_n           : out std_logic;
 		RDB             : in  std_logic_vector(7 downto 0);
@@ -89,6 +90,10 @@ entity mw8080 is
 		O_VIDEO_G       : out std_logic;
 		O_VIDEO_B       : out std_logic;
 		O_VIDEO_A       : out std_logic;
+		O_Starfield     : out std_logic_vector(5 downto 0);
+		I_StarReg		 : in  std_logic_vector(3 downto 0);
+		O_StarRNG		 : out std_logic_vector(5 downto 0);
+		
 		Overlay         : in std_logic;
 		OverlayTest     : in std_logic;
 		ScreenFlip      : in std_logic;
@@ -132,6 +137,17 @@ architecture struct of mw8080 is
 		DO              : out std_logic_vector(7 downto 0));
 	end component;
 
+	component cosmostars 
+	port(
+		Clk             : in  std_logic;
+		timer_v         : in  std_logic_vector(8 downto 0);
+		timer_h         : in  std_logic_vector(8 downto 0);
+		I_starreg       : in  std_logic_vector(3 downto 0);
+		O_RNG           : out std_logic_vector(5 downto 0);
+		O_Starfield     : out std_logic_vector(5 downto 0)
+	);
+	end component;
+	
 	signal Ready_i      : std_logic;
 	signal Hold         : std_logic;
 	signal IntTrig      : std_logic;
@@ -204,7 +220,7 @@ begin
 	RAB <= A(12 downto 0) when CntD5(2) = '1' else
 		    std_logic_vector(CntE7(3 downto 0) & CntE6(3 downto 0) & CntE5(3 downto 0) & CntD5(3)) when ScreenFlip='0' else
 		    not std_logic_vector((CntE7(3 downto 0)-2) & CntE6(3 downto 0) & CntE5(3 downto 0) & CntD5(3));
-
+			 
 	u_8080: T8080se
 		generic map (
 			Mode => 2,
@@ -478,4 +494,13 @@ begin
 		
 	end process;
 
+		u_cosmostars: cosmostars
+		port map (
+			CLK => StarCLK,
+			timer_v => std_logic_vector(CntE7(4 downto 0)) & std_logic_vector(CntE6(3 downto 0)),
+			timer_h => std_logic_vector(CntE5(4 downto 0)) & std_logic_vector(CntD5(3 downto 0)),
+			I_starreg => I_StarReg, -- "1011", -- Testing, stick to simple scrolling for the moment
+			O_RNG => O_StarRNG,
+			O_Starfield => O_Starfield
+		);
 end;

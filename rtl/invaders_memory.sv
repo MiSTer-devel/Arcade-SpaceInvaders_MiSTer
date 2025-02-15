@@ -16,6 +16,10 @@ module invaders_memory(
 	output           Vortex_bit,
 	output    [7:0]  PlanePos,
 	
+	// For Cosmo star generator
+	output    [3:0]  O_StarReg,
+	input	 	 [5:0]  I_StarRNG,
+	
 	// Machine ID (where needed)
 	input            mod_vortex,
 	input            mod_attackforce,
@@ -105,7 +109,7 @@ video_rom(
 	.q_b(color_prom_out_rom)
 );
 	
-always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacechaser, mod_cosmo, RW_n, Ram_in) begin
+always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacechaser, mod_cosmo, RW_n, Ram_in, CPU_RW_n) begin
 	
 	Rom_out = 8'b00000000;
 
@@ -126,8 +130,13 @@ always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacech
 			5'b01000 : Rom_out = rom2_data;
 			5'b01001 : Rom_out = rom2_data;
 			5'b01010 : Rom_out = rom2_data;
-			5'b01011 : if (mod_cosmo & (rom_addr[10]==1'b1)) begin
-							 Rom_out = color_ram_out;
+			5'b01011 : if (mod_cosmo) begin
+								if (rom_addr[10]==1'b1) begin
+									Rom_out = color_ram_out;
+								end
+								else begin
+									Rom_out = {2'b0,I_StarRNG};
+								end
 						  end 
 						  else begin
 							 Rom_out = rom2_data;
@@ -139,6 +148,11 @@ always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacech
 	// Save Polaris Plane position
 	if (rom_addr == 16'b0010000011101010 & ~RW_n) begin
 		PlanePos = Ram_in;
+	end;
+	
+	// Cosmo can also read and write to 5800 : Write is to Star Register, read is from Random number generator
+	if (rom_addr == 16'b0101100000000000 & ~CPU_RW_n) begin
+		O_StarReg = Ram_in[3:0];
 	end;
 end
 

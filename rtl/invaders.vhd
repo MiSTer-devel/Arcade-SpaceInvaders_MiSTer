@@ -58,6 +58,7 @@ entity invaderst is
 	port(
 		Rst_n           : in  std_logic;
 		Clk             : in  std_logic;
+		StarCLK			 : in  std_logic;  -- for Cosmo stars
 		ENA             : out  std_logic;
 
 		GDB0            : in std_logic_vector(7 downto 0);
@@ -91,7 +92,10 @@ entity invaderst is
 		O_VIDEO_G       : out std_logic;
 		O_VIDEO_B       : out std_logic;
 		O_VIDEO_A       : out std_logic;
-		
+		O_Starfield		 : out std_logic_vector(5 downto 0);
+		I_StarReg		 : in  std_logic_vector(3 downto 0);
+		O_StarRNG		 : out std_logic_vector(5 downto 0);
+
 		WD_Enabled      : in std_logic;
 		Overlay         : in std_logic;
 		OverlayTest     : in std_logic;
@@ -134,6 +138,7 @@ architecture rtl of invaderst is
 	port(
 		Rst_n           : in  std_logic;
 		Clk             : in  std_logic;
+		StarCLK			 : in  std_logic;  -- for Cosmo stars
 		ENA             : out  std_logic;
 		RWE_n           : out std_logic;
 		RDB             : in  std_logic_vector(7 downto 0);
@@ -155,12 +160,18 @@ architecture rtl of invaderst is
 		Sample          : out std_logic;
 		Wr              : out std_logic;
 		Video           : out std_logic;
-                color_prom_out  : in  std_logic_vector(7 downto 0);
-                color_prom_addr : out std_logic_vector(10 downto 0);
-                O_VIDEO_R       : out std_logic;
-                O_VIDEO_G       : out std_logic;
-                O_VIDEO_B       : out std_logic;
-					 O_VIDEO_A	     : out std_logic;
+		
+		color_prom_out  : in  std_logic_vector(7 downto 0);
+		color_prom_addr : out std_logic_vector(10 downto 0);
+		
+		O_VIDEO_R       : out std_logic;
+		O_VIDEO_G       : out std_logic;
+		O_VIDEO_B       : out std_logic;
+		O_VIDEO_A	     : out std_logic;
+		O_Starfield		 : out std_logic_vector(5 downto 0);
+		I_StarReg		 : in  std_logic_vector(3 downto 0);
+		O_StarRNG		 : out std_logic_vector(5 downto 0);
+
 		Overlay         : in std_logic;
 		OverlayTest     : in std_logic;
 		ScreenFlip      : in std_logic;
@@ -194,14 +205,16 @@ architecture rtl of invaderst is
 	signal Sample       : std_logic;
 	signal Rst_n_s_i    : std_logic;
 	signal GDB_A        : unsigned(2 downto 0);
-	
+
+	--signal Starfield    : std_logic_vector(5 downto 0);
 begin
 
 	Rst_n_s <= Rst_n_s_i;
 	RWD <= DB;
 	AD <= AD_i;
 	CPU_RW_n <= CPU_WR;
-
+	--O_Starfield <= Starfield;
+	
 	process (Rst_n, Clk)
 		variable Rst_n_r : std_logic;
 	begin
@@ -238,6 +251,7 @@ begin
 		port map(
 			Rst_n => Rst_n_s_i,
 			Clk => Clk,
+			StarCLK => StarCLK,
 			ENA => ENA,
 			RWE_n => RWE_n,
 			RDB => RDB,
@@ -265,6 +279,10 @@ begin
 			O_VIDEO_G => O_VIDEO_G,
 			O_VIDEO_B => O_VIDEO_B,
 			O_VIDEO_A => O_VIDEO_A,
+			O_Starfield => O_Starfield,
+			I_StarReg => I_StarReg,
+		   O_StarRNG => O_StarRNG,
+			
 			Overlay => Overlay,
 			OverlayTest => OverlayTest,
 			ScreenFlip => ScreenFlip,
