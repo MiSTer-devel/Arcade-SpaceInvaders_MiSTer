@@ -20,11 +20,11 @@
 //============================================================================
 //
 // 10 May 2024 - MacroFPGA - Update SYS, Add Shuffleboard, Add freeplay option for some games
+// 12 Feb 2025 - MacroFPGA - Cosmo stars, update SYS
 //
 
 // Enable overlay (or not) for debugging
 //`define DEBUG_MODE
-
 
 module emu
 (
@@ -64,6 +64,7 @@ module emu
 	input  [11:0] HDMI_WIDTH,
 	input  [11:0] HDMI_HEIGHT,
 	output        HDMI_FREEZE,
+	output        HDMI_BLACKOUT,
 
 `ifdef MISTER_FB
 	// Use framebuffer in DDRAM
@@ -190,7 +191,7 @@ assign VGA_F1    = 0;
 assign VGA_SCALER= 0;
 assign VGA_DISABLE=0;
 assign HDMI_FREEZE = 0;
-
+assign HDMI_BLACKOUT = 0;
 
 assign USER_OUT  = '1;
 assign LED_USER  = ioctl_download;
@@ -241,7 +242,7 @@ localparam CONF_STR = {
 
 ////////////////////   CLOCKS   ///////////////////
 
-wire clk_80,clk_40, clk_10;
+wire clk_80,clk_40, clk_10, clk_20;
 wire clk_mem = clk_80;
 wire clk_sys = clk_10;
 wire pll_locked;
@@ -253,6 +254,7 @@ pll pll
 	.outclk_0(clk_40),
 	.outclk_1(clk_10),
 	.outclk_2(clk_80),
+	.outclk_3(clk_20),
 	.locked(pll_locked)
 );
 
@@ -431,19 +433,31 @@ pause #(8,8,8,10) pause (
 
 wire hblank;
 wire vblank;
-wire r,g,b;
+wire r,g2,b2;
 wire no_rotate = AllowRotate ? status[2] | direct_video | landscape : 1'd1;
 wire flip = 0;
+
+// Cosmo wires the colour ram up differently to everyone else
+wire g = (mod == mod_cosmo) ? b2 : g2;
+wire b = (mod == mod_cosmo) ? g2 : b2;
+
+// Star colour (for cosmo, all other games will be black
+wire [7:0] csr = (mod == mod_cosmo) ? CosmoStar[1] ? CosmoStar[4] ? 8'd255 : 8'd80 : CosmoStar[4] ? 8'd80 : 8'd0 : 8'd0;
+wire [7:0] csg = (mod == mod_cosmo) ? CosmoStar[0] ? CosmoStar[5] ? 8'd255 : 8'd80 : CosmoStar[4] ? 8'd80 : 8'd0 : 8'd0;
+wire [7:0] csb = (mod == mod_cosmo) ? CosmoStar[2] ? CosmoStar[3] ? 8'd255 : 8'd80 : CosmoStar[4] ? 8'd80 : 8'd0 : 8'd0;
+wire [23:0] cbg = {csr,csg,csb};
 
 reg Force_Red;
 reg [23:0] Background_Col;
 
 reg ce_pix;
-always @(posedge clk_40) begin
-        reg [2:0] div;
+wire Star_pix = clk_20;
 
-        div <= div + 1'd1;
-	ce_pix <= div == 0;
+always @(posedge clk_40) begin
+   reg [2:0] div;
+
+   div <= div + 1'd1;
+	ce_pix <= div == 0;		// Pixel clock = 5Mhz
 end
 
 wire fg;
@@ -454,21 +468,22 @@ wire fg;
 	wire [7:0]rr = (Force_Red)? {8{r||g||b}} | {C_R,C_R} : {8{r}} | {C_R,C_R};
 	wire [7:0]gg = (Force_Red)? {C_R,C_R} : {8{g}} | {C_R,C_R};
 	wire [7:0]bb = (Force_Red)? {C_R,C_R} : {8{b}} | {C_R,C_R};
-	wire [23:0] rgbdata  = (gun_target & (~&gun_mode & gun_game)) ? {8'd255, 16'd0} : status[10]? ((fg || og) ? {rr,gg,bb} : Background_Col) : ((fg || og) && !bg_a) ? {rr,gg,bb} : {bg_r,bg_g,bg_b} | Background_Col;
+	wire [23:0] rgbdata  = (gun_target & (~&gun_mode & gun_game)) ? {8'd255, 16'd0} : status[10]? ((fg || og) ? {rr,gg,bb} : Background_Col | cbg) : ((fg || og) && !bg_a) ? {rr,gg,bb} : {bg_r,bg_g,bg_b} | Background_Col;
 `else
    // normal mix of foreground / background 
 	wire [7:0]rr = (Force_Red)? {8{r||g||b}} : {8{r}};
 	wire [7:0]gg = (Force_Red)? {8'd0} : {8{g}};
 	wire [7:0]bb = (Force_Red)? {8'd0} : {8{b}};
-	wire [23:0] rgbdata  = (gun_target & (~&gun_mode & gun_game)) ? {8'd255, 16'd0} : status[10]? (fg ? {rr,gg,bb} : Background_Col) : (fg && !bg_a) ? {rr,gg,bb} : {bg_r,bg_g,bg_b} | Background_Col;
+	wire [23:0] rgbdata  = (gun_target & (~&gun_mode & gun_game)) ? {8'd255, 16'd0} : status[10]? (fg ? {rr,gg,bb} : Background_Col | cbg) : (fg && !bg_a) ? {rr,gg,bb} : {bg_r,bg_g,bg_b} | Background_Col;
 `endif
 
-arcade_video #(.WIDTH(260), .DW(24)) arcade_video
+// Higher width to allow for Cosmo starfield
+arcade_video #(.WIDTH(1040), .DW(24)) arcade_video
 (
         .*,
 
         .clk_video(clk_40),
-        .ce_pix(ce_pix),
+        .ce_pix((mod == mod_cosmo) ? Star_pix : ce_pix),
 
         .RGB_in(rgb_out),
         .HBlank(hblank),
@@ -1589,6 +1604,10 @@ wire CPU_RW_n;
 wire [11:0] HCount;
 wire [11:0] VCount;
 
+wire [5:0] CosmoStar;
+reg  [3:0] CosmoStarReg;
+wire [5:0] CosmoRNG;
+
 wire Vortex_Col;
 
 // Software flip reverses whatever the hardware flip was set to
@@ -1597,6 +1616,7 @@ wire DoScreenFlip = software_flip ? ~(ScreenFlip & ~landscape) : (ScreenFlip & ~
 invaderst invaderst(
 		.Rst_n(~(reset_sys)),
 		.Clk(clk_sys),
+		.StarCLK(Star_pix),
 		.ENA(),
 
 		.GDB0(GDB0),
@@ -1629,10 +1649,13 @@ invaderst invaderst(
 		.Overlay_Align(Overlay4),
 
 		.O_VIDEO_R(r),
-		.O_VIDEO_G(g),
-		.O_VIDEO_B(b),
+		.O_VIDEO_G(g2),
+		.O_VIDEO_B(b2),
 		.O_VIDEO_A(fg),
-		
+		.O_Starfield(CosmoStar),
+		.I_StarReg(CosmoStarReg),
+		.O_StarRNG(CosmoRNG),
+
 		.HBLANK(hblank),
 		.VBLANK(vblank),
 		.HSync(HSync),
@@ -1684,6 +1707,9 @@ invaderst invaderst(
 			.dn_wr(ioctl_wr&ioctl_index==0),
 			.Vortex_bit(Vortex_Col),
 			.PlanePos(PlanePos),
+			.O_StarReg(CosmoStarReg),
+	      .I_StarRNG(CosmoRNG),
+			
 			.mod_vortex(mod==mod_vortex),
 			.mod_attackforce(mod==mod_attackforce),
 			.mod_cosmo(mod==mod_cosmo),
@@ -1996,18 +2022,25 @@ ovo OVERLAY
     .in1(Line2)
 );
 
+wire [11:0] MHCount;
+wire [11:0] MVCount;
+
 always @(posedge clk_sys)
 begin
 	Line1[4:0] <= 5'b10000;
-	Line1[8:5] <= Tone_High[7:4];
-	Line1[13:10] <= Tone_High[3:0];
-	Line1[19:15] <= 5'b10000;
-	Line1[23:20] <= PlanePos[7:4];
-	Line1[29:25] <= PlanePos[3:0];
-	Line1[34:30] <= 5'b10000;
+	//Line1[8:5] <=   CosmoCount[23:20];
+	//Line1[13:10] <= CosmoCount[19:16];
+	//Line1[19:15] <= CosmoCount[15:12];
+	Line1[23:20] <= HCount[11:8];
+	Line1[29:25] <= HCount[7:4];
+	Line1[33:30] <= HCount[3:0];
+	Line1[39:35] <= 5'b10000;
+	Line1[44:40] <= 5'b10000;
 end	
 
 `endif
+
+
 
 // Clouds for Balloon Bomber
 
