@@ -5,6 +5,7 @@
 	<mratimestamp>20201030010603</mratimestamp>
 	<year>1980</year>
 	<manufacturer>Taito</manufacturer>
+	<rotation>vertical (ccw)</rotation>
 	<category>Army / Submarine</category>
 	<rbf>spaceinvaders</rbf>
 	<mameinfo parent="0" cpp="8080bw" input="polaris"/>
