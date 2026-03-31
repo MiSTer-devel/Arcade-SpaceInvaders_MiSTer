@@ -26,8 +26,6 @@ port(
 	 dl_download	 : in  std_logic;
 	 samples_ok     : out std_logic;
 	 
-	 HEX1           : out std_logic_vector(159 downto 0);
-	 
 	 -- Clocks and things
 	 CLK_SYS        : in  std_logic; -- 10Mhz (for loading table)
 	 clock          : in  std_logic; -- 80Mhz (this drives the rest)
@@ -144,13 +142,15 @@ begin
 			wave_read    <= '0';
 			audio_out_L <= x"0000";
 			audio_out_R <= x"0000";
-			HEX1 <= (others=>'0');
 		else 
 			-- Use falling edge to interleave commands with SDRAM module
 			if falling_edge(clock) then
 			
 				-- make sure we don't miss any bits being set
 				next_ports <= next_ports or ports;
+
+				-- make sure we don't miss any bits being cleared
+				last_ports <= last_ports and ports;
 				
 				if snd_addr_play(snd_id)=x"FFFFFF" then
 					-- All Start play on 0 to 1 transition
@@ -312,19 +312,6 @@ begin
 									end if;									
 								end if;
 							end if;
-							
-							-- Debug info to overlay
---							HEX1(4 downto 0) <= "10000"; -- Space
---							HEX1(8 downto 5) <= wave_left(15 downto 12);
---							HEX1(13 downto 10) <= wave_left(11 downto 8);
---							HEX1(18 downto 15) <= wave_left(7 downto 4);
---							HEX1(23 downto 20) <= wave_left(3 downto 0);
---							HEX1(29 downto 25) <= "10000"; -- Space
---							HEX1(33 downto 30) <= wave_right(15 downto 12);
---							HEX1(38 downto 35) <= wave_right(11 downto 8);
---							HEX1(43 downto 40) <= wave_right(7 downto 4);
---							HEX1(48 downto 45) <= wave_right(3 downto 0);
---							HEX1(54 downto 50) <= "10000"; -- Space
 							
 						end if; -- Playing
 

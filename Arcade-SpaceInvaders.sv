@@ -21,6 +21,7 @@
 //
 // 10 May 2024 - MacroFPGA - Update SYS, Add Shuffleboard, Add freeplay option for some games
 // 12 Feb 2025 - MacroFPGA - Cosmo stars, update SYS
+// 31 Mar 2026 - MacroFPGA - Cosmo custom sound, update SYS
 //
 
 // Enable overlay (or not) for debugging
@@ -332,11 +333,6 @@ wire AllowFreeplay = (mod==mod_ballbomb || mod==mod_lunarrescue || mod==mod_lupi
 wire m_start1;
 wire m_start2;
 wire m_coin1;
-/*
-wire m_start1  = joy[8];
-wire m_start2  = joy[9];
-wire m_coin1   = joy[10];
-*/
 
 freeplay #(
 	.count(1000000),
@@ -417,6 +413,7 @@ wire [15:0] joy = joy1 | joy2;
 wire m_pause   = joy[11];
 
 // PAUSE SYSTEM
+
 wire				pause_cpu;
 wire [23:0]		rgb_out;
 pause #(8,8,8,10) pause (
@@ -531,10 +528,8 @@ wire [7:0] inv_audio_data;
 wire [15:0] zap_audio_data;
 wire use_samples;
 
-//assign AUDIO_L = use_samples? samples_left  : (mod==mod_280zap)? zap_audio_data:{inv_audio_data,inv_audio_data};
-//assign AUDIO_R = use_samples? samples_right : (mod==mod_280zap)? zap_audio_data:{inv_audio_data,inv_audio_data};
-assign AUDIO_L = use_samples? samples_left  : {inv_audio_data,inv_audio_data};
-assign AUDIO_R = use_samples? samples_right : {inv_audio_data,inv_audio_data};
+assign AUDIO_L = !use_samples ? {inv_audio_data,inv_audio_data} : (mod == mod_cosmo) ? {CosmoNoise,CosmoNoise} : samples_left;
+assign AUDIO_R = !use_samples ? {inv_audio_data,inv_audio_data} : samples_right;
 assign AUDIO_S = use_samples; // signed for samples, unsigned for generated
 
 wire reset;
@@ -553,13 +548,14 @@ assign reset = (RESET | status[0] | buttons[1] | ioctl_download);
     reset_mem <= reset_mem_pipe[1];
     reset_mem_pipe <= reset_mem_pipe << 1 | reset;
   end
-wire [7:0] GDB0;
-wire [7:0] GDB1;
-wire [7:0] GDB2;
-wire [7:0] GDB3;
-wire [7:0] GDB4;
-wire [7:0] GDB5;
-wire [7:0] GDB6;
+  
+reg [7:0] GDB0;
+reg [7:0] GDB1;
+reg [7:0] GDB2;
+reg [7:0] GDB3;
+reg [7:0] GDB4;
+reg [7:0] GDB5;
+reg [7:0] GDB6;
 
 // Games - Completed
 localparam mod_boothill      = 5;
@@ -899,8 +895,8 @@ wire [7:0] S;
 wire [7:0] SR= { S[0], S[1], S[2], S[3], S[4], S[5], S[6], S[7]} ;
 
 // Midway Tone Generator data
-wire [5:0] Tone_Low;
-wire [7:0] Tone_High; // Also used for Balloon Bomber and Polaris
+reg [6:0] Tone_Low;  // Also used for Cosmo
+reg [7:0] Tone_High; // Also used for Balloon Bomber, Polaris and Cosmo
 
 always @(*) begin
 
@@ -1268,20 +1264,23 @@ always @(*) begin
 				software_flip   		  <= 1'd0;
 			end
 
-			mod_cosmo:
+	mod_cosmo:
 			begin
 				landscape<=0;
 				ccw<=0;
 				color_rom_enabled<=1;
-				GDB0 <= sw[0] | { 1'b0, 1'b0,1'b0,1'b0,1'b0,1'b0, 1'b0,1'b0};
-				GDB1 <= sw[1] | { 1'b0, m_right,m_left,m_fire_a,1'b1,m_start1, m_start2, m_coin1 };
-				GDB2 <= sw[2] | { 1'b1, m_right,m_left,m_fire_a,1'b0,1'b0, 1'b0, 1'b0 };
+				GDB0 <= { 1'b0, 1'b0,1'b0,1'b0,1'b0,1'b0, 1'b0,1'b0};
+				GDB1 <= { 1'b1, m_right,m_left,m_fire_a,1'b1,m_start1, m_start2, ~m_coin1 };
+				GDB2 <= { 1'b1, m_right,m_left,m_fire_a,1'b1, 1'b1, 1'b1, sw[2][0]};
 				Trigger_ShiftCount     <= 1'b0;
 				Trigger_AudioDeviceP1  <= PortWr[3];
 				Trigger_ShiftData      <= 1'b0;
 				Trigger_AudioDeviceP2  <= PortWr[5];
 				Trigger_WatchDogReset  <= PortWr[6];
 				software_flip   		  <= 1'd0;
+				// Need Port 0,1,2 and 7
+				Trigger_Tone_Low       <= PortWr[0];
+				Trigger_Tone_High      <= PortWr[1];
 			end
 			
 	mod_dogpatch:
@@ -1609,6 +1608,8 @@ wire [11:0] VCount;
 wire [5:0] CosmoStar;
 reg  [3:0] CosmoStarReg;
 wire [5:0] CosmoRNG;
+reg [6:0] CosmoP2;
+reg [6:0] CosmoP7;
 
 wire Vortex_Col;
 
@@ -1640,6 +1641,8 @@ invaderst invaderst(
 		.SoundCtrl5(SoundCtrl5),
 		.Tone_Low(Tone_Low),
 		.Tone_High(Tone_High),
+		.CosmoP2(CosmoP2),
+		.CosmoP7(CosmoP7),
 		.Rst_n_s(Rst_n_s),
 		.RWE_n(RWE_n),
 		.Video(Video),
@@ -1913,11 +1916,7 @@ samples samples
 	.clock(clk_mem),
 	.reset(reset_mem),
 	
-`ifdef DEBUG_MODE
-	.Hex1(Line2),
-`endif
-	
-	.audio_in(mod == mod_polaris ? P_Tone_Out : mod == mod_ballbomb ? BB_Tone_Out : (mod == mod_280zap || mod == mod_lagunaracer)? zap_audio_data : Tone_Out),
+	.audio_in(mod == mod_polaris ? P_Tone_Out : mod == mod_ballbomb ? BB_Tone_Out : (mod == mod_280zap || mod == mod_lagunaracer) ? zap_audio_data : mod == mod_cosmo ? 16'd0 : Tone_Out),
 	.audio_out_L(samples_left),
 	.audio_out_R(samples_right)
 );
@@ -1984,6 +1983,7 @@ BALLOON_MUSIC BALLOON_MUSIC
 );
 
 // Polaris tune generator (music or plane position)
+
 reg [15:0] P_Tone_Out;
 reg  [7:0] PlanePos;
 wire [7:0] PolarTone = SoundCtrl5[1] ? PlanePos : Tone_High;
@@ -1996,6 +1996,30 @@ BALLOON_MUSIC POLARIS_MUSIC
     .CLK(clk_10)
 );
 
+// Cosmo sound generator
+
+reg [7:0] CosmoNoise;
+
+COSMO_SFX COSMO_SFX
+(
+     .CLK(CLK_AUDIO),			// 24.576Mhz
+	  .PORT0_WR(PortWr[0]),
+	  .PORT1_WR(PortWr[1]),
+
+	  .PORT0(Tone_Low[6:0]),
+	  .PORT1(Tone_High[6:0]),
+	  .PORT2(CosmoP2[6:0]),
+	  .PORT7(CosmoP7[6:0]),
+	  
+	  .dn_addr(ioctl_addr),
+	  .dn_data(ioctl_dout),
+	  .dn_wr(ioctl_wr),
+	  .dn_ld(mod==mod_cosmo && ioctl_download && ioctl_addr[14]==1'b1 && ioctl_index==0),
+	  
+	  .audio_enabled(Audio_Output),
+     .O_SFX(CosmoNoise)
+);
+	
 	
 // Debug Overlay!
 
@@ -2030,19 +2054,17 @@ wire [11:0] MVCount;
 always @(posedge clk_sys)
 begin
 	Line1[4:0] <= 5'b10000;
-	//Line1[8:5] <=   CosmoCount[23:20];
-	//Line1[13:10] <= CosmoCount[19:16];
-	//Line1[19:15] <= CosmoCount[15:12];
-	Line1[23:20] <= HCount[11:8];
-	Line1[29:25] <= HCount[7:4];
-	Line1[33:30] <= HCount[3:0];
-	Line1[39:35] <= 5'b10000;
-	Line1[44:40] <= 5'b10000;
+	Line1[8:5] <=   Tone_Low[7:4];
+	Line1[13:10] <= Tone_Low[3:0];
+	Line1[19:15] <= 5'b10000;
+	Line1[23:20] <= CosmoP7[7:4];
+	Line1[28:25] <= CosmoP7[3:0];
+	Line1[34:30] <= 5'b10000;
+	Line1[38:35] <= Tone_High[7:4];
+	Line1[43:40] <= Tone_High[3:0];
 end	
 
 `endif
-
-
 
 // Clouds for Balloon Bomber
 
