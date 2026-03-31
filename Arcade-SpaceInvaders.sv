@@ -528,9 +528,6 @@ wire [7:0] inv_audio_data;
 wire [15:0] zap_audio_data;
 wire use_samples;
 
-//wire [15:0] cosmo_audio = {2'b0,~samples_left[15],samples_left[14:2]} + {1'b0,CosmoNoise,CosmoNoise};
-//wire [16:0] cosmo_audio = {1'b0,CosmoNoise,CosmoNoise};
-
 assign AUDIO_L = !use_samples ? {inv_audio_data,inv_audio_data} : (mod == mod_cosmo) ? {CosmoNoise,CosmoNoise} : samples_left;
 assign AUDIO_R = !use_samples ? {inv_audio_data,inv_audio_data} : samples_right;
 assign AUDIO_S = use_samples; // signed for samples, unsigned for generated
