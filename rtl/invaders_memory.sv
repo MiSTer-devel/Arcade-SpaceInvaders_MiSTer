@@ -89,7 +89,6 @@ assign color_prom_out = (mod_cosmo | mod_indianbattle) ? {color_prom_out_rom[7:3
 wire color_ram_wr = mod_cosmo ? (rom_addr[15:10]==6'b010111 & ~CPU_RW_n) : (ScatteredRam | mod_spacechaser) ? (rom_addr[15:13]==3'b110 & ~CPU_RW_n):1'b0;
 
 wire [10:0] cosmo_addr = {1'b0,rom_addr[9:0]};
-//wire [10:0] Scattered_addr = {1'd0,rom_addr[12:8],rom_addr[4:0]};
 wire [10:0] Scattered_addr = {rom_addr[13:8],rom_addr[4:0]};
 
 wire [7:0]  color_ram_out;
@@ -109,7 +108,7 @@ video_rom(
 	.q_b(color_prom_out_rom)
 );
 	
-always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacechaser, mod_cosmo, RW_n, Ram_in, CPU_RW_n) begin
+always @(rom_addr, rom_data, rom2_data, color_ram_out, ScatteredRam, mod_spacechaser, mod_cosmo, RW_n, Ram_in, CPU_RW_n, I_StarRNG) begin
 	
 	Rom_out = 8'b00000000;
 
