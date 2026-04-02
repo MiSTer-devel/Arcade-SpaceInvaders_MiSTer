@@ -2028,6 +2028,18 @@ COSMO_SFX COSMO_SFX
 reg [3:0] C_R,C_G,C_B;
 reg [159:0] Line1,Line2;
 
+// For putting characters in at position POS
+`define LC(POS, VAL) Line1[POS*5+4:POS*5] <= VAL;
+
+// for putting nibbles in at position POS
+`define L4(POS, VAL) Line1[POS*5+3:POS*5] <= VAL;
+
+// for putting 8 bit numbers in at position POS and POS+1
+`define L8(POS, VAL) Line1[POS*5+3:POS*5] <= VAL[7:4]; Line1[POS*5+8:POS*5+5] <= VAL[3:0];
+
+// for putting 16 bit numbers in at position POS to POS+3
+`define L16(POS, VAL) Line1[POS*5+3:POS*5] <= VAL[15:12]; Line1[POS*5+8:POS*5+5] <= VAL[11:8]; Line1[POS*5+13:POS*5+10] <= VAL[7:4]; Line1[POS*5+18:POS*5+15] <= VAL[3:0];
+
 ovo OVERLAY
 (
     .i_r(4'd0),
